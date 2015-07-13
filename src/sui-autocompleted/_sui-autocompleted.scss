@@ -1,0 +1,55 @@
+$primary-color: $c-bg;
+$secundary-color: $c-darkness-light;
+$selected-color: darken($primary-color, 20%);
+
+.sui-Autocompleted {
+  position: relative;
+  width: 100%;
+}
+
+.sui-Autocompleted-input {
+  padding: $p-base;
+  width: 100%;
+  font-size: $fz-body;
+  font-weight: bold;
+}
+
+.sui-Autocompleted-clear:after {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  content: 'X';
+}
+
+.sui-Autocompleted-results {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  list-style-type: none;
+}
+
+.sui-Autocompleted-item {
+  padding: $p-base * 1.25;
+  margin: 0;
+  font-size: $fz-base;
+
+  &:nth-child(odd) {
+    background: $primary-color;
+  }
+
+  &:nth-child(even) {
+    background: $secundary-color;
+  }
+
+  &--active {
+    &:nth-child(odd) {
+      background: $selected-color;
+    }
+
+    &:nth-child(even) {
+      background: $selected-color;
+    }
+  }
+}
+
