@@ -22,16 +22,16 @@ $selected-color: darken($primary-color, 20%);
 }
 
 .sui-Autocompleted-results {
+  position: absolute;
   margin: 0;
   padding: 0;
-  position: absolute;
   width: 100%;
   list-style-type: none;
 }
 
 .sui-Autocompleted-item {
-  padding: $p-base * 1.25;
   margin: 0;
+  padding: $p-base * 1.25;
   font-size: $fz-base;
 
   &:nth-child(odd) {
