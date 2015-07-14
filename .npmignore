@@ -1,12 +1,14 @@
-.tmp
-dist
+src
 docs
 node_modules
 test
+scripts
+.babelrc
 .editorconfig
 .eslintrc
 .gitignore
 .jscsrc
-karma.conf.js
+.scss-lint.yml
 npm-debug.log
 webpack.config.js
+webpack.doc.config.js
