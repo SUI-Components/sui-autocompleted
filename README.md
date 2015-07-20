@@ -9,6 +9,7 @@ To run from the source and start to play with the examples:
 
 * `$ git clone https://github.com/scm-spain/sui-card`
 * `$ cd sui-card`
+* `$ npm install`
 * `$ npm run dev`
 *  Go to _localhost:8080_
 
