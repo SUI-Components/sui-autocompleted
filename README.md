@@ -49,6 +49,7 @@ An SuggestObject is a plain JS Object with three specials keys:
 {
     'id': [Unique id for the suggestion],
     'value': [value to be passed at the handleSelect callback]
+    'literal': [String] This key is REQUIRED only if you are using a ReactJS Component like a content. Will be used to decide with text put in the input text when this suggest is selected in other case content will be used,
     'content': [React Component] or [Text to be show in the UI]
 }
 ```
