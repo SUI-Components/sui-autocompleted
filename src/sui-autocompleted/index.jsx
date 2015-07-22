@@ -61,6 +61,12 @@ export default class Autocompleted extends React.Component {
   }
 
   render() {
+    const suggests = this.props.suggests;
+    const resultList = suggests && suggests.length !== 0 ? (<ResultsList
+                                                            {...this.props}
+                                                            handleSelect={this.handleSelect.bind(this)}
+                                                            active={this.state.active}/>)
+                                                        : null;
     return (
       <div className='sui-Autocompleted'>
         <input
@@ -73,7 +79,7 @@ export default class Autocompleted extends React.Component {
         <span
           className='sui-Autocompleted-clear'
           onClick={this.handleChange.bind(this, {target: {value: null}})}></span>
-        <ResultsList {...this.props} handleSelect={this.handleSelect.bind(this)} active={this.state.active}/>
+          {resultList}
       </div>
     );
   }
