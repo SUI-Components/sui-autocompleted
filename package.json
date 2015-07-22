@@ -34,7 +34,6 @@
     "url": "https://github.com/SUI-Components/sui-autocompleted/"
   },
   "pre-commit": [
-    "lint",
     "test"
   ],
   "dependencies": {
