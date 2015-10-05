@@ -13,8 +13,7 @@
 
     "prepublish": "npm run dist",
 
-    "lint": "npm run lint:jscs && npm run lint:eslint && npm run lint:sass",
-    "lint:jscs": "cat ./{src,test}/**/*.{js,jsx} | jscs",
+    "lint": "npm run lint:eslint && npm run lint:sass",
     "lint:eslint": "eslint --ext=\".js\" --ext=\".jsx\" src/",
     "lint:sass": "scss-lint src/",
 
@@ -34,7 +33,8 @@
     "url": "https://github.com/SUI-Components/sui-autocompleted/"
   },
   "pre-commit": [
-    "test"
+    "test",
+    "lint"
   ],
   "dependencies": {
     "classnames": "^2.1.3",
