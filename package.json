@@ -64,6 +64,6 @@
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0",
     "react": "0.14",
-    "react-dom": "0.14"
+    "react-dom": "latest"
   }
 }
