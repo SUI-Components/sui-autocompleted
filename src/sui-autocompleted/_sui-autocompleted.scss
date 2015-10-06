@@ -1,6 +1,4 @@
-$primary-color: $c-bg;
-$secundary-color: $c-darkness-light;
-$selected-color: darken($primary-color, 20%);
+@import './settings';
 
 .sui-Autocompleted {
   position: relative;
@@ -14,11 +12,13 @@ $selected-color: darken($primary-color, 20%);
   width: 100%;
 }
 
-.sui-Autocompleted-clear:after {
-  content: 'X';
-  position: absolute;
-  right: 20px;
-  top: 15px;
+.sui-Autocompleted-clear {
+  &:after {
+    content: 'X';
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
 }
 
 .sui-Autocompleted-results {
