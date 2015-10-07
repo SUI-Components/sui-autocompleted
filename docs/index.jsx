@@ -1,10 +1,9 @@
-import 'babel/polyfill'
+import 'babel/polyfill';
 import React from 'react';
 import ReactDom from 'react-dom';
-import {Autocompleted} from '../src';
-import AutocompletedContainer from './autocompleted-container'
-import AutocompletedGithubUserContainer from './autocompleted-githubUsers-container'
-import AutocompletedComponentContainer from './autocompleted-component-container'
+import AutocompletedContainer from './autocompleted-container';
+import AutocompletedGithubUserContainer from './autocompleted-githubUsers-container';
+import AutocompletedComponentContainer from './autocompleted-component-container';
 import './style.scss';
 import '../src/index.scss';
 
