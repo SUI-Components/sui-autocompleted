@@ -1,29 +1,13 @@
 # SUI-Autocompleted
 
-`sui-autocompleted` is a simple React component that shows a list of suggestions under an input file when you start to write something.
+React component that shows a list of suggestions under an input file when you start to write something.
+It's based on the container component design ( [more info](https://medium.com/@learnreact/container-components-c0e67432e005) ).
 
+## Demo page
 
-## Install
+Checkout a Sui-Autocompleted component demo [here](http://sui-components.github.io/sui-autocompleted/).
 
-In order of running the source code and start to play with the examples:
-
-* `$ git clone https://github.com/scm-spain/sui-card`
-* `$ cd sui-card`
-* `$ npm install`
-* `$ npm run dev`
-*  Go to _localhost:8080_
-
-## Testing
-
-There are two options for executing tests:
-
-* Single mode: `$ npm test`
-* Watch mode: `$ npm run test:watch`
-
-
-## Design
-
-The design used is the container component one ( [more info](https://medium.com/@learnreact/container-components-c0e67432e005) ).
+## Usage
 
 The component exposes the following props:
 
@@ -67,4 +51,41 @@ There are several classes in order to apply a theme to the component:
 * sui-autocompleted-item--active
 
 The component exports a basic CSS that you can include from the package in the node_modules.
+
+## Installation
+
+In order of running the source code and start playing with the examples:
+
+* `$ git clone https://github.com/scm-spain/sui-autocompleted`
+* `$ cd sui-autocompleted`
+* `$ npm install`
+* `$ npm run dev`
+*  Go to _localhost:8080_
+
+
+## Testing
+Execute a complete test by running:
+
+```
+There are two options for executing tests:
+
+* Single mode: `$ npm test`
+* Watch mode: `$ npm run test:watch`
+
+```
+In addition, you can run specific test for linting JS and SASS:
+SASS: (SASS linting rules specified in file `.scss-lint.yml`)
+
+```
+$ npm run lint:sass
+```
+
+## NPM
+- The SUI-Card component is available as a NPM package [here](https://www.npmjs.com/package/@schibstedspain/sui-autocompleted):
+```
+npm install @schibstedspain/sui-autocompleted`
+```
+
+##ToDo
+
 
