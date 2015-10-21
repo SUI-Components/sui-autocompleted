@@ -79,6 +79,11 @@ In order of running the source code and start playing with the examples:
 * `$ npm run dev`
 *  Go to _localhost:8080_
 
+## Bundle
+In order to generate the bundle including all React dependencies and the component logic we need to bundle a single JS file running the following command:
+```
+$ npm run build
+```
 
 ## JS Testing
 Execute a complete test by running:
