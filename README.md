@@ -9,6 +9,23 @@ Checkout a Sui-Autocompleted component demo [here](http://sui-components.github.
 
 ## Usage
 
+```
+import 'babel/polyfill';
+import React from 'react';
+import ReactDom from 'react-dom';
+import AutocompletedContainer from './autocompleted-container';
+import AutocompletedGithubUserContainer from './autocompleted-githubUsers-container';
+import AutocompletedComponentContainer from './autocompleted-component-container';
+import './style.scss';
+import '../src/index.scss';
+
+ReactDom.render(<AutocompletedContainer />, document.getElementById('languages'));
+ReactDom.render(<AutocompletedGithubUserContainer />, document.getElementById('github-users'));
+ReactDom.render(<AutocompletedComponentContainer />, document.getElementById('component-container'));
+```
+
+## Component Properties
+
 The component exposes the following props:
 
 * placeholder (String): **Optional** Default text value for the input file when no key is pressed (placeholder value).
@@ -63,7 +80,7 @@ In order of running the source code and start playing with the examples:
 *  Go to _localhost:8080_
 
 
-## Testing
+## JS Testing
 Execute a complete test by running:
 
 ```
@@ -71,6 +88,8 @@ There are two options for executing tests:
 
 * Single mode: `$ npm test`
 * Watch mode: `$ npm run test:watch`
+
+## Lint Testing
 
 ```
 In addition, you can run specific test for linting JS and SASS:
