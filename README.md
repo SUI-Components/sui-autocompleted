@@ -3,9 +3,13 @@
 React component that shows a list of suggestions under an input file when you start to write something.
 It's based on the container component design ( [more info](https://medium.com/@learnreact/container-components-c0e67432e005) ).
 
+
 ## Demo page
 
-Checkout a Sui-Autocompleted component demo [here](http://sui-components.github.io/sui-autocompleted/).
+- Checkout a Sui-Autocompleted component demo [here](http://sui-components.github.io/sui-autocompleted/).
+ <br /> or...
+- Clone the repo and open `index.html` file inside `docs` folder <br /> or...
+
 
 ## Usage
 
@@ -23,6 +27,7 @@ ReactDom.render(<AutocompletedContainer />, document.getElementById('languages')
 ReactDom.render(<AutocompletedGithubUserContainer />, document.getElementById('github-users'));
 ReactDom.render(<AutocompletedComponentContainer />, document.getElementById('component-container'));
 ```
+
 
 ## Component Properties
 
@@ -69,23 +74,36 @@ There are several classes in order to apply a theme to the component:
 
 The component exports a basic CSS that you can include from the package in the node_modules.
 
+
 ## Installation
 
-In order of running the source code and start playing with the examples:
+To run the component and play with the examples you have to:
+
+### Download files from GitHub repo.
 
 * `$ git clone https://github.com/scm-spain/sui-autocompleted`
 * `$ cd sui-autocompleted`
-* `$ npm install`
-* `$ npm run dev`
+
+### Install dependencies.
+
+* `$ npm install` // Install npm dependencies from package.json
+
+### Launch the development environment.
+
+* `$ npm run dev` // Run development environment
 *  Go to _localhost:8080_
 
+
 ## Bundle
+
 In order to generate the bundle including all React dependencies and the component logic we need to bundle a single JS file running the following command:
 ```
 $ npm run build
 ```
 
+
 ## JS Testing
+
 Execute a complete test by running:
 
 ```
@@ -93,6 +111,7 @@ There are two options for executing tests:
 
 * Single mode: `$ npm test`
 * Watch mode: `$ npm run test:watch`
+
 
 ## Lint Testing
 
@@ -104,12 +123,24 @@ SASS: (SASS linting rules specified in file `.scss-lint.yml`)
 $ npm run lint:sass
 ```
 
+
 ## NPM
-- The SUI-Card component is available as a NPM package [here](https://www.npmjs.com/package/@schibstedspain/sui-autocompleted):
+
+The SUI-Card component is available as a NPM package [here](https://www.npmjs.com/package/@schibstedspain/sui-autocompleted):
+
 ```
 npm install @schibstedspain/sui-autocompleted`
 ```
 
+
 ##ToDo
 
 
+## Environment Dependencies
+
+To run the lint tasks we have dependencies of:
+
+* [Ruby](https://www.ruby-lang.org/en/downloads/)
+* [scss-lint](https://github.com/brigade/scss-lint)
+
+If that tools are not installed you cant commit. Because the lint pass never will be ok.
