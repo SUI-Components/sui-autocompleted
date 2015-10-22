@@ -8,7 +8,7 @@ It's based on the container component design ( [more info](https://medium.com/@l
 
 - Checkout a Sui-Autocompleted component demo [here](http://sui-components.github.io/sui-autocompleted/).
  <br /> or...
-- Clone the repo and open `index.html` file inside `docs` folder <br /> or...
+- Clone the repo and open `index.html` file inside `docs` folder
 
 
 ## Usage
@@ -126,7 +126,7 @@ $ npm run lint:sass
 
 ## NPM
 
-The SUI-Card component is available as a NPM package [here](https://www.npmjs.com/package/@schibstedspain/sui-autocompleted):
+The SUI-Autocompleted component is available as a NPM package [here](https://www.npmjs.com/package/@schibstedspain/sui-autocompleted):
 
 ```
 npm install @schibstedspain/sui-autocompleted`
