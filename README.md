@@ -132,10 +132,6 @@ The SUI-Autocompleted component is available as a NPM package [here](https://www
 npm install @schibstedspain/sui-autocompleted`
 ```
 
-
-##ToDo
-
-
 ## Environment Dependencies
 
 To run the lint tasks we have dependencies of:
