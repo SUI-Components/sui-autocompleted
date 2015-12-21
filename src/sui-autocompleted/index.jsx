@@ -70,6 +70,7 @@ export default class Autocompleted extends React.Component {
     return (
       <div className='sui-Autocompleted'>
         <input
+          ref='autocompletedInput'
           value={this.state.value}
           placeholder={this.props.placeholder}
           className='sui-Autocompleted-input'
