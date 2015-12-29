@@ -4,26 +4,20 @@
   "main": "dist/",
   "scripts": {
     "clean:dist": "rm -Rf ./dist/*",
-
     "predist": "npm run clean:dist -s",
     "dist": "npm run dist:scripts && npm run dist:styles",
     "dist:scripts": "babel src --out-dir dist",
     "dist:styles": "node-sass src/index.scss dist/sui-autocompleted.css --importer ./scripts/importer.js",
     "postdist:styles": "cp dist/sui-autocompleted.css dist/_sui-autocompleted.scss",
-
     "prepublish": "npm run dist",
-
     "lint": "npm run lint:eslint && npm run lint:sass",
     "lint:eslint": "eslint --ext=\".js\" --ext=\".jsx\" src/",
     "lint:sass": "scss-lint src/",
-
     "test": "mocha --compilers js:babel/register --recursive",
     "test:watch": "npm run test -- -w test src --watch-extensions jsx",
-
     "dev": "npm run dev:open && npm run dev:serve",
     "dev:serve": "webpack-dev-server --devtool eval --progress --colors --content-base docs/",
     "dev:open": "opener http://localhost:8080",
-
     "predoc": "webpack --config webpack.doc.config.js",
     "doc": "npm run doc:build",
     "doc:build": "gh-pages -d docs"
@@ -37,34 +31,34 @@
     "lint"
   ],
   "peerDependencies": {
-    "react": "0.14.0"
+    "react": "0.14"
   },
   "dependencies": {
-    "classnames": "^2.1.3"
+    "classnames": "2.1.3"
   },
   "devDependencies": {
     "@schibstedspain/frontend-pre-commit-rules": "latest",
     "@schibstedspain/theme-basic": "latest",
-    "babel": "^5.5.6",
-    "babel-eslint": "~3.1.14",
-    "babel-loader": "^5.1.4",
-    "css-loader": "^0.15.3",
-    "eslint": "~0.23.0",
-    "eslint-plugin-react": "~2.5.0",
-    "expect": "^1.6.0",
-    "gh-pages": "^0.3.1",
-    "lodash": "~3.9.3",
-    "mocha": "^2.2.5",
-    "node-libs-browser": "^0.5.2",
-    "node-sass": "^3.1.2",
-    "opener": "^1.4.1",
-    "react-hot-loader": "^1.2.7",
-    "sass-loader": "^1.0.2",
-    "style-loader": "^0.12.3",
-    "webpack": "^1.9.11",
-    "webpack-dev-server": "^1.9.0",
-    "react": "0.14.0",
-    "react-addons-test-utils": "^0.14",
-    "react-dom": "0.14.0"
+    "babel": "5.5.6",
+    "babel-eslint": "3.1.14",
+    "babel-loader": "5.1.4",
+    "css-loader": "0.15.3",
+    "eslint": "0.23.0",
+    "eslint-plugin-react": "2.5.0",
+    "expect": "1.6.0",
+    "gh-pages": "0.3.1",
+    "lodash": "3.9.3",
+    "mocha": "2.2.5",
+    "node-libs-browser": "0.5.2",
+    "node-sass": "^3.4.2",
+    "opener": "1.4.1",
+    "react": "0.14",
+    "react-addons-test-utils": "0.14",
+    "react-dom": "0.14",
+    "react-hot-loader": "1.2.7",
+    "sass-loader": "1.0.2",
+    "style-loader": "0.12.3",
+    "webpack": "1.9.11",
+    "webpack-dev-server": "1.9.0"
   }
 }
