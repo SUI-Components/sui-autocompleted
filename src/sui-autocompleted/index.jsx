@@ -29,9 +29,12 @@ const upDownHandler = function(event) {
 
 const enterHandler = function() {
   const suggest = this.props.suggests[this.state.active];
-  const value = suggest.literal || suggest.content;
-  this.setState({value});
-  this.handleSelect(suggest);
+  
+  if(suggest) {
+    const value = suggest.literal || suggest.content;
+    this.setState({value});
+    this.handleSelect(suggest);
+  }
 };
 
 export default class Autocompleted extends React.Component {
