@@ -29,7 +29,7 @@ const upDownHandler = function(event) {
 
 const enterHandler = function() {
   const suggest = this.props.suggests[this.state.active];
-  
+
   if(suggest) {
     const value = suggest.literal || suggest.content;
     this.setState({value});
@@ -41,7 +41,8 @@ export default class Autocompleted extends React.Component {
 
   constructor (props) {
     super(props);
-    this.state = {active: FIRST_POSITION};
+
+    this.state = {active: FIRST_POSITION, value: this.props.value};
   }
 
   handleSelect (suggest) {
@@ -70,6 +71,7 @@ export default class Autocompleted extends React.Component {
                                                             handleSelect={this.handleSelect.bind(this)}
                                                             active={this.state.active}/>)
                                                         : null;
+
     return (
       <div className='sui-Autocompleted'>
         <input
@@ -93,5 +95,6 @@ Autocompleted.propTypes = {
   placeholder: React.PropTypes.string,
   suggests: React.PropTypes.array.isRequired,
   handleChange: React.PropTypes.func.isRequired,
-  handleSelect: React.PropTypes.func.isRequired
+  handleSelect: React.PropTypes.func.isRequired,
+  value: React.PropTypes.string
 };
