@@ -96,5 +96,5 @@ Autocompleted.propTypes = {
   suggests: React.PropTypes.array.isRequired,
   handleChange: React.PropTypes.func.isRequired,
   handleSelect: React.PropTypes.func.isRequired,
-  initialValue: React.PropTypes.string.isRequired
+  initialValue: React.PropTypes.string
 };
