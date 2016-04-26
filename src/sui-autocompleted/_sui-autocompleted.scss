@@ -13,7 +13,7 @@
 }
 
 .sui-Autocompleted-clear {
-  &:after {
+  &::after {
     content: 'X';
     position: absolute;
     right: 20px;

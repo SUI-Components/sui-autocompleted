@@ -63,3 +63,7 @@ Temporary Items
 *.css.map
 .tmp/
 dist/
+
+### IDEA ###
+.idea
+*.iml
