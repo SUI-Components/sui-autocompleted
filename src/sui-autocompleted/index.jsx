@@ -42,7 +42,7 @@ export default class Autocompleted extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {active: FIRST_POSITION};
+    this.state = {active: FIRST_POSITION, value: props.initialValue || ''};
   }
 
   handleSelect (suggest) {
@@ -95,5 +95,6 @@ Autocompleted.propTypes = {
   placeholder: React.PropTypes.string,
   suggests: React.PropTypes.array.isRequired,
   handleChange: React.PropTypes.func.isRequired,
-  handleSelect: React.PropTypes.func.isRequired
+  handleSelect: React.PropTypes.func.isRequired,
+  initialValue: React.PropTypes.string.isRequired
 };
