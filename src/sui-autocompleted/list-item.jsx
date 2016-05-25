@@ -13,9 +13,9 @@ export default class ListItem extends React.Component {
     });
     return (
       <li
+        dangerouslySetInnerHTML={{__html: this.props.item.content}}
         className={classes}
         onClick={this.props.handleSelect.bind(null, this.props.item)}>
-          {this.props.item.content}
       </li>
     );
   }
