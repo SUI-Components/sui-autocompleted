@@ -64,12 +64,17 @@ export default class Autocompleted extends React.Component {
   handleKeyDown (event) {
     this.setState({showResultList: true});
 
-    if (event.key === UP || event.key === DOWN) {
-      upDownHandler.bind(this)(event);
-    } else if (event.key === ENTER) {
-      enterHandler.bind(this)();
-    } else if (event.key === ESCAPE) {
-      escapeHandler.bind(this)();
+    switch (event.key) {
+      case UP:
+      case DOWN:
+        upDownHandler.bind(this)(event);
+      break;
+      case ENTER:
+        enterHandler.bind(this)();
+      break;
+      case ESCAPE:
+        escapeHandler.bind(this)();
+      break;
     }
   }
 
