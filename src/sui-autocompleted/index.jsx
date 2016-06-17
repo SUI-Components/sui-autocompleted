@@ -6,6 +6,7 @@ const DELTA_MOVE = 1;
 const UP = 'ArrowUp';
 const DOWN = 'ArrowDown';
 const ENTER = 'Enter';
+const ESCAPE = 'Escape';
 
 const moveDown = function() {
   const lastPosition = this.props.suggests.length - 1;
@@ -37,6 +38,10 @@ const enterHandler = function() {
   }
 };
 
+const escapeHandler = function () {
+  this.setState({showResultList: false, active: null});
+};
+
 export default class Autocompleted extends React.Component {
 
   constructor (props) {
@@ -57,10 +62,19 @@ export default class Autocompleted extends React.Component {
   }
 
   handleKeyDown (event) {
-    if (event.key === UP || event.key === DOWN) {
-      upDownHandler.bind(this)(event);
-    } else if (event.key === ENTER) {
-      enterHandler.bind(this)();
+    this.setState({showResultList: true});
+
+    switch (event.key) {
+      case UP:
+      case DOWN:
+        upDownHandler.bind(this)(event);
+      break;
+      case ENTER:
+        enterHandler.bind(this)();
+      break;
+      case ESCAPE:
+        escapeHandler.bind(this)();
+      break;
     }
   }
 
@@ -85,7 +99,7 @@ export default class Autocompleted extends React.Component {
         <span
           className='sui-Autocompleted-clear'
           onClick={this.handleChange.bind(this, {target: {value: null}})}></span>
-          {resultList}
+          { this.state.showResultList && resultList}
       </div>
     );
   }
