@@ -1,26 +1,12 @@
 import React from 'react';
 import ResultsList from './results-list';
 import WordSuggestionList from './word-suggestion-list';
+import Keyboard from './utils/keyboard'
 
 import caret from "./utils/caret";
 
 const FIRST_POSITION = 0;
 const DELTA_MOVE = 1;
-const UP = 'ArrowUp';
-const DOWN = 'ArrowDown';
-const ENTER = 'Enter';
-const ESCAPE = 'Escape';
-const LEFT = 'ArrowLeft';
-const RIGHT = 'ArrowRight';
-const SHIFT = 'Shift';
-const CONTROL = 'Control';
-const SPACE = ' ';
-
-
-function stopEventPropagation(event) {
-  event.stopPropagation();
-  event.preventDefault();
-}
 
 const textInputContentForWordSuggestion = function (event) {
   return textInputContentForWordSuggestionInField.bind(this)(event.target);
@@ -65,17 +51,17 @@ const moveRight = function () {
 
 const upDownHandler = function(event) {
   // Never go to negative values or value higher than the list length
-  const active = event.key === DOWN ? moveDown.bind(this)
+  const active = event.key === Keyboard.DOWN ? moveDown.bind(this)
                                     : moveUp.bind(this);
   this.setState({active: active()});
-  stopEventPropagation(event);
+  event.stopBubbling();
 };
 
 const leftRightHandler = function (event) {
   if (this.state.showWordSuggestions && this.props.wordSuggestions && this.props.wordSuggestions.length > 0) {
-    const active = event.key === LEFT ? moveLeft.bind(this) : moveRight.bind(this);
+    const active = event.key === Keyboard.LEFT ? moveLeft.bind(this) : moveRight.bind(this);
     this.setState({ activeWord: active() });
-    stopEventPropagation(event);
+    event.stopBubbling();
   }
 };
 
@@ -115,7 +101,7 @@ const dispatchWordContext = function (wordContext, wordSuggestionObject) {
 
   this.setState({ value: textArray.reduce((initial, value) => initial + " " + value) });
   this.hideWordSuggestions();
-  stopEventPropagation(event);
+  event.stopBubbling();
 };
 
 export default class Autocompleted extends React.Component {
@@ -156,30 +142,13 @@ export default class Autocompleted extends React.Component {
   }
 
   handleKeyDown (event) {
-    switch (event.key) {
-      case UP:
-      case DOWN:
-        upDownHandler.bind(this)(event);
-      break;
-      case LEFT:
-      case RIGHT:
-        if (event.shiftKey || event.ctrlKey || event.altKey) {
-          break;
-        }
-        leftRightHandler.bind(this)(event);
-      break;
-      case ENTER:
-        enterHandler.bind(this)();
-      break;
-      case ESCAPE:
-        escapeHandler.bind(this)();
-      break;
-      case SPACE:
-        spaceHandler.bind(this)(event);
-      break;
-      default:
-        this.setState({showResultList: true, showWordSuggestions: true});
-    }
+    var kb = new Keyboard(event);
+    kb.on([Keyboard.UP, Keyboard.DOWN], upDownHandler.bind(this))
+      .on([Keyboard.LEFT, Keyboard.RIGHT], leftRightHandler.bind(this))
+      .on([Keyboard.ENTER], enterHandler.bind(this))
+      .on([Keyboard.ESCAPE], escapeHandler.bind(this))
+      .on([Keyboard.SPACE], spaceHandler.bind(this))
+      .otherwise(() => this.setState({showResultList: true, showWordSuggestions: true}));
   }
 
   render() {
