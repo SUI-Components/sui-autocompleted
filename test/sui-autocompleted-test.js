@@ -1,8 +1,7 @@
-import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
-import {createComponent} from './utilities';
-import expect from 'expect';
-import Autocompleted from '../src/sui-autocompleted';
+import React from "react";
+import {createComponent} from "./test-utilities";
+import expect from "expect";
+import Autocompleted from "../src/sui-autocompleted";
 
 describe('sui-autocompleted component test suite', function () {
 
