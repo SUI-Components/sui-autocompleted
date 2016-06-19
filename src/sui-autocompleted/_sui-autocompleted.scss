@@ -52,29 +52,29 @@
       content: "";
     }
   }
+}
 
 
-  .sui-Autocompleted-results > .sui-Autocompleted-item {
-    font-size: $fz-base;
-    margin: 0;
-    padding: $p-base * 1.25;
+.sui-Autocompleted-results > .sui-Autocompleted-item {
+  font-size: $fz-base;
+  margin: 0;
+  padding: $p-base * 1.25;
 
+  &:nth-child(odd) {
+    background: $primary-color;
+  }
+
+  &:nth-child(even) {
+    background: $secundary-color;
+  }
+
+  &--active {
     &:nth-child(odd) {
-      background: $primary-color;
+      background: $selected-color;
     }
 
     &:nth-child(even) {
-      background: $secundary-color;
-    }
-
-    &--active {
-      &:nth-child(odd) {
-        background: $selected-color;
-      }
-
-      &:nth-child(even) {
-        background: $selected-color;
-      }
+      background: $selected-color;
     }
   }
 }

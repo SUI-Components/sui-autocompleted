@@ -1,4 +1,4 @@
-export default function caret (field) {
+function caret (field) {
 
   var iCaretPos = 0;
 
@@ -14,4 +14,19 @@ export default function caret (field) {
   }
 
   return iCaretPos;
+}
+
+export default class Caret {
+  static matchField(field) {
+    const caretPosition = caret(field);
+    const fullText = field.value;
+    const wordArray = fullText.split(" ");
+    const currentWordIndex = (fullText.substring(0, caretPosition).split(' ') || []).length - 1;
+
+    return { text: fullText, word: wordArray[currentWordIndex], wordIndex: currentWordIndex };
+  }
+
+  static matchEvent(event) {
+    return Caret.matchField(event.target);
+  }
 }

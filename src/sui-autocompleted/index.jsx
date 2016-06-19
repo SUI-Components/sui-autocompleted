@@ -2,139 +2,85 @@ import React from 'react';
 import ResultsList from './results-list';
 import WordSuggestionList from './word-suggestion-list';
 import Keyboard from './utils/keyboard'
+import Caret from "./utils/caret";
+import ListSelector from "./utils/list-selector";
 
-import caret from "./utils/caret";
-
-const FIRST_POSITION = 0;
-const DELTA_MOVE = 1;
-
-const textInputContentForWordSuggestion = function (event) {
-  return textInputContentForWordSuggestionInField.bind(this)(event.target);
-};
-
-const textInputContentForWordSuggestionInField = function (field) {
-  const caretPosition = caret(field);
-  const fullText = field.value;
-  const wordArray = fullText.split(" ");
-  const currentWordIndex = (fullText.substring(0, caretPosition).split(' ') || []).length - 1;
-
-  return { text: fullText, word: wordArray[currentWordIndex], wordIndex: currentWordIndex };
-};
-
-const moveDown = function() {
-  const lastPosition = this.props.suggests.length - 1;
-  return this.state.active === lastPosition ? this.state.active
-                                            : this.state.active + DELTA_MOVE;
-};
-
-const moveUp = function() {
-  return this.state.active === FIRST_POSITION ? this.state.active
-                                              : this.state.active - DELTA_MOVE;
-};
-
-const moveLeft = function () {
-  if (this.state.activeWord == null) {
-    return FIRST_POSITION;
-  }
-
-  return this.state.activeWord === FIRST_POSITION ? this.state.activeWord : this.state.activeWord - DELTA_MOVE;
-};
-
-const moveRight = function () {
-  if (this.state.activeWord == null) {
-    return FIRST_POSITION;
-  }
-
-  const lastPosition = this.props.wordSuggestions.length - 1;
-  return this.state.activeWord === lastPosition ? this.state.activeWord : this.state.activeWord + DELTA_MOVE;
-};
-
-const upDownHandler = function(event) {
-  // Never go to negative values or value higher than the list length
-  const active = event.key === Keyboard.DOWN ? moveDown.bind(this)
-                                    : moveUp.bind(this);
-  this.setState({active: active()});
-  event.stopBubbling();
-};
-
-const leftRightHandler = function (event) {
-  if (this.state.showWordSuggestions && this.props.wordSuggestions && this.props.wordSuggestions.length > 0) {
-    const active = event.key === Keyboard.LEFT ? moveLeft.bind(this) : moveRight.bind(this);
-    this.setState({ activeWord: active() });
-    event.stopBubbling();
-  }
-};
-
-const enterHandler = function() {
-  const suggest = this.props.suggests[this.state.active];
-
-  if(suggest) {
-    const value = suggest.literal || suggest.content;
-    this.setState({value});
-    this.handleSelect(suggest);
-  }
-};
-
-const escapeHandler = function () {
-  this.setState({showResultList: false, showWordSuggestions: false, active: null, activeWord: null });
-};
-
-const spaceHandler = function (event) {
-  const wordContext = textInputContentForWordSuggestion(event);
-  if (!this.shouldDispatchWordSuggestions(wordContext)) {
-    return this.hideWordSuggestions();
-  }
-  const wordSuggestionObject = this.props.wordSuggestions[this.state.activeWord];
-
-  if (!wordSuggestionObject) {
-    return this.hideWordSuggestions();
-  }
-
-  dispatchWordContext.bind(this)(wordContext, wordSuggestionObject);
-};
-
-const dispatchWordContext = function (wordContext, wordSuggestionObject) {
-  const wordIndex = wordContext.wordIndex;
-  const textArray = wordContext.text.split(' ');
-
-  textArray[wordIndex] = wordSuggestionObject.literal || wordSuggestionObject.content;
-
-  this.setState({ value: textArray.reduce((initial, value) => initial + " " + value) });
-  this.hideWordSuggestions();
-  event.stopBubbling();
-};
 
 export default class Autocompleted extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {active: FIRST_POSITION, activeWord: null, value: props.initialValue || ''};
+    this.state = {
+      value: props.initialValue || '',
+      wordSelector: new ListSelector(),
+      suggestionSelector: new ListSelector()
+    };
   }
 
-  hideWordSuggestions() {
-    this.setState({showWordSuggestions: false});
+  nextSuggestion(event) {
+    this.setState({ suggestionSelector: this.state.suggestionSelector.selectNext(event.stopBubbling) });
   }
 
-  shouldDispatchWordSuggestions(wordContext) {
-    return wordContext.word.trim() != ' ' && this.state.showWordSuggestions && this.props.wordSuggestions && this.props.wordSuggestions.length > 0;
+  previousSuggestion(event) {
+    this.setState({ suggestionSelector: this.state.suggestionSelector.selectPrevious(event.stopBubbling) });
   }
 
-  handleSelect (suggest) {
-    this.setState({value: suggest.literal || suggest.content});
-    this.props.handleSelect(suggest);
+  selectSuggestion() {
+    this.handleSelect(this.state.suggestionSelector.selectedValue());
+  }
+
+  handleSelect (option) {
+    this.setState({ value: option.literal || option.content });
+    this.hideAllSuggestions();
+  }
+
+  nextWord(event) {
+    this.setState({ wordSelector: this.state.wordSelector.selectNext(event.stopBubbling) });
+  }
+
+  previousWord(event) {
+    this.setState({ wordSelector: this.state.wordSelector.selectPrevious(event.stopBubbling) });
+  }
+
+  selectWord(event) {
+    const wordContext = Caret.matchEvent(event);
+    if (!this.state.showWordSuggestions) {
+      return this.hideAllSuggestions();
+    }
+    const wordSuggestionObject = this.state.wordSelector.selectedValue();
+
+    if (!wordSuggestionObject) {
+      return this.hideAllSuggestions();
+    }
+
+    this.handleSelectWord(wordContext, wordSuggestionObject);
+  }
+
+  handleSelectWord(selectionContext, wordSuggestion) {
+    const wordIndex = selectionContext.wordIndex;
+    const textArray = selectionContext.text.split(' ');
+
+    textArray[wordIndex] = wordSuggestion.literal || wordSuggestion.content;
+
+    this.setState({ value: textArray.reduce((initial, value) => initial + " " + value) });
+    this.hideAllSuggestions();
   }
 
   handleWordSuggestionSelect (word) {
     const inputText = this.refs.autocompletedInput;
-    const wordContext = textInputContentForWordSuggestionInField(inputText);
-    dispatchWordContext.bind(this)(wordContext, word);
+    const wordContext = Caret.matchField(inputText);
+    this.handleSelectWord(wordContext, word);
+  }
+
+  hideAllSuggestions() {
+    this.setState({showWordSuggestions: false, showResultList: false});
   }
 
   handleChange (event) {
     const value = event.target.value;
-    this.setState({value, active: FIRST_POSITION});
+    this.setState({ value });
     this.props.handleChange(value);
-    var eventContext = textInputContentForWordSuggestion(event);
+    var eventContext = Caret.matchEvent(event);
     if (eventContext.word.trim() != '') {
       const wordSuggestionFunction = (this.props.handleWordSuggestion || function () {});
       wordSuggestionFunction(eventContext.text, eventContext.word);
@@ -143,30 +89,37 @@ export default class Autocompleted extends React.Component {
 
   handleKeyDown (event) {
     var kb = new Keyboard(event);
-    kb.on([Keyboard.UP, Keyboard.DOWN], upDownHandler.bind(this))
-      .on([Keyboard.LEFT, Keyboard.RIGHT], leftRightHandler.bind(this))
-      .on([Keyboard.ENTER], enterHandler.bind(this))
-      .on([Keyboard.ESCAPE], escapeHandler.bind(this))
-      .on([Keyboard.SPACE], spaceHandler.bind(this))
+    kb.on([Keyboard.DOWN], this.nextSuggestion.bind(this))
+      .on([Keyboard.UP], this.previousSuggestion.bind(this))
+      .on([Keyboard.RIGHT], this.nextWord.bind(this))
+      .on([Keyboard.LEFT], this.previousWord.bind(this))
+      .on([Keyboard.ENTER], this.selectSuggestion.bind(this))
+      .on([Keyboard.ESCAPE], this.hideAllSuggestions.bind(this))
+      .on([Keyboard.SPACE], this.selectWord.bind(this))
+      .ignore([Keyboard.CONTROL, Keyboard.SHIFT])
       .otherwise(() => this.setState({showResultList: true, showWordSuggestions: true}));
   }
 
   render() {
-    const suggests = this.props.suggests;
-    const wordSuggestion = this.props.wordSuggestions;
-    const wordSuggestionList = wordSuggestion && wordSuggestion.length !== 0 ?
+    this.state.suggestionSelector = this.state.suggestionSelector.containing(this.props.suggests);
+    this.state.wordSelector = this.state.wordSelector.containing(this.props.wordSuggestions);
+
+    const wordSuggestionList = this.state.wordSelector.canSelect() ?
       (<WordSuggestionList
         {...this.props}
+          wordSuggestions={this.state.wordSelector.allValues()}
           handleSelect={this.handleWordSuggestionSelect.bind(this)}
-          active={this.state.activeWord}
+          active={this.state.wordSelector.selectedIndex()}
         />
     ) : null;
 
-    const resultList = suggests && suggests.length !== 0 ? (<ResultsList
-                                                            {...this.props}
-                                                            handleSelect={this.handleSelect.bind(this)}
-                                                            active={this.state.active}/>)
-                                                        : null;
+    const resultList = this.state.suggestionSelector.canSelect() ?
+      (<ResultsList
+        {...this.props}
+          suggests={this.state.suggestionSelector.allValues()}
+          handleSelect={this.handleSelect.bind(this)}
+          active={this.state.suggestionSelector.selectedIndex()}/>
+    ) : null;
 
     return (
       <div className='sui-Autocompleted'>
@@ -180,7 +133,7 @@ export default class Autocompleted extends React.Component {
           onKeyDown={this.handleKeyDown.bind(this)}/>
         <span
           className='sui-Autocompleted-clear'
-          onClick={this.handleChange.bind(this, {target: {value: null}})}></span>
+          onClick={this.handleChange.bind(this, {target: {value: ''}})}></span>
           { this.state.showWordSuggestions && wordSuggestionList }
           { this.state.showResultList && resultList}
       </div>

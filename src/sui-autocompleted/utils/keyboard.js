@@ -2,6 +2,7 @@ class AlreadyDispatchedKeyboard {
   constructor() {}
   on() { return this; }
   otherwise() { return this; }
+  ignore() { return this; }
 }
 
 export default class Keyboard {
@@ -19,6 +20,10 @@ export default class Keyboard {
     } else {
       return this.__dispatch(keypress, work);
     }
+  }
+
+  ignore(keypress) {
+    return this.on(keypress, () => {});
   }
 
   otherwise(work) {

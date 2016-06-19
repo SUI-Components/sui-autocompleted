@@ -19,6 +19,6 @@ export default class WordSuggestionList extends React.Component {
 }
 
 WordSuggestionList.propTypes = {
-  suggests: React.PropTypes.array.isRequired,
+  wordSuggestions: React.PropTypes.array.isRequired,
   active: React.PropTypes.number
 };
