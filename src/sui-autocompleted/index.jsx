@@ -70,6 +70,7 @@ export default class Autocompleted extends React.Component {
     const inputText = this.refs.autocompletedInput;
     const wordContext = Caret.matchField(inputText);
     this.handleSelectWord(wordContext, word);
+    this.refs.autocompletedInput.focus();
   }
 
   hideAllSuggestions() {
