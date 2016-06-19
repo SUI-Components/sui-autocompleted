@@ -10,6 +10,9 @@ export default class ListSelector {
   containing(value) {
     this.selector = value || [];
     this.selectorLength = this.selector.length;
+    if (this.selected >= this.selectorLength) {
+      this.selected = this.selectorLength - 1;
+    }
 
     return this;
   }
@@ -17,7 +20,7 @@ export default class ListSelector {
   selectNext(onSuccess) {
     if (this.selected < (this.selectorLength - 1)) {
       this.selected = this.selected + 1;
-      onSuccess();
+      ListSelector.__callback(onSuccess);
     }
 
     return this;
@@ -26,7 +29,7 @@ export default class ListSelector {
   selectPrevious(onSuccess) {
     if (this.selected > FIRST_POSITION) {
       this.selected = this.selected - 1;
-      onSuccess();
+      ListSelector.__callback(onSuccess);
     }
     return this;
   }
@@ -45,5 +48,9 @@ export default class ListSelector {
 
   canSelect() {
     return this.selector != null && this.selector.length > 0;
+  }
+
+  static __callback(cb) {
+    (cb || () => {})();
   }
 }
