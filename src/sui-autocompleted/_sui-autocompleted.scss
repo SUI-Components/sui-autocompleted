@@ -29,7 +29,33 @@
   width: 100%;
 }
 
-.sui-Autocompleted-item {
+.sui-Autocompleted-word-suggestion-results {
+  display: inline-block;
+
+  & > .sui-Autocompleted-item {
+    list-style-type: none;
+    display: inline-block;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &--active {
+      border-bottom: 1px solid $selected-color;
+    }
+
+    &:after {
+      content: "|";
+      padding-left: 16px;
+    }
+
+    &:last-child:after {
+      content: "";
+    }
+  }
+}
+
+
+.sui-Autocompleted-results > .sui-Autocompleted-item {
   font-size: $fz-base;
   margin: 0;
   padding: $p-base * 1.25;
