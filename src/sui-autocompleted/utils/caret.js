@@ -9,7 +9,7 @@ function caret (field) {
     iCaretPos = oSel.text.length;
   }
 
-  else if (field.selectionStart || field.selectionStart == '0') {
+  else if (field.selectionStart || field.selectionStart === '0') {
     iCaretPos = field.selectionStart;
   }
 
@@ -20,7 +20,7 @@ export default class Caret {
   static matchField(field) {
     const caretPosition = caret(field);
     const fullText = field.value;
-    const wordArray = fullText.split(" ");
+    const wordArray = fullText.split(' ');
     const currentWordIndex = (fullText.substring(0, caretPosition).split(' ') || []).length - 1;
 
     return { text: fullText, word: wordArray[currentWordIndex], wordIndex: currentWordIndex };

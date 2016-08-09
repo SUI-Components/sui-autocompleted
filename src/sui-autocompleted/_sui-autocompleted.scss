@@ -3,79 +3,79 @@
 .sui-Autocompleted {
   position: relative;
   width: 100%;
-}
 
-.sui-Autocompleted-input {
-  font-size: $fz-body;
-  font-weight: bold;
-  padding: $p-base;
-  width: 100%;
-}
-
-.sui-Autocompleted-clear {
-  &::after {
-    content: 'X';
-    position: absolute;
-    right: 20px;
-    top: 15px;
+  &-input {
+    font-size: $fz-body;
+    font-weight: bold;
+    padding: $p-base;
+    width: 100%;
   }
-}
 
-.sui-Autocompleted-results {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  width: 100%;
-}
+  &-clear {
+    cursor: pointer;
 
-.sui-Autocompleted-word-suggestion-results {
-  display: inline-block;
+    &::after {
+      content: 'X';
+      position: absolute;
+      right: 20px;
+      top: 15px;
+    }
+  }
 
-  & > .sui-Autocompleted-item {
+  &-results {
     list-style-type: none;
-    display: inline-block;
-    padding: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
-
-    &--active {
-      border-bottom: 1px solid $selected-color;
-    }
-
-    &:after {
-      content: "|";
-      padding-left: 16px;
-    }
-
-    &:last-child:after {
-      content: "";
-    }
-  }
-}
-
-
-.sui-Autocompleted-results > .sui-Autocompleted-item {
-  font-size: $fz-base;
-  margin: 0;
-  padding: $p-base * 1.25;
-
-  &:nth-child(odd) {
-    background: $primary-color;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
   }
 
-  &:nth-child(even) {
-    background: $secundary-color;
-  }
+  &-item {
+    cursor: pointer;
+    font-size: $fz-base;
+    margin: 0;
+    padding: $p-base * 1.25;
 
-  &--active {
     &:nth-child(odd) {
-      background: $selected-color;
+      background: $primary-color;
     }
 
     &:nth-child(even) {
-      background: $selected-color;
+      background: $secundary-color;
+    }
+
+    &--active {
+      &:nth-child(odd) {
+        background: $selected-color;
+      }
+
+      &:nth-child(even) {
+        background: $selected-color;
+      }
+    }
+  }
+
+  &-suggestion {
+    display: inline-block;
+
+    > .sui-Autocompleted-item {
+      background: none;
+      display: inline-block;
+      list-style-type: none;
+      padding: 3px 10px;
+
+      &--active {
+        border-bottom: 1px solid $selected-color;
+      }
+
+      &:after {
+        content: '|';
+        padding-left: 16px;
+      }
+
+      &:last-child:after {
+        content: '';
+      }
     }
   }
 }
-

@@ -1,10 +1,9 @@
 import React from 'react';
 import ResultsList from './results-list';
 import WordSuggestionList from './word-suggestion-list';
-import Keyboard from './utils/keyboard'
-import Caret from "./utils/caret";
-import ListSelector from "./utils/list-selector";
-
+import Keyboard from './utils/keyboard';
+import Caret from './utils/caret';
+import ListSelector from './utils/list-selector';
 
 export default class Autocompleted extends React.Component {
   constructor (props) {
@@ -62,7 +61,7 @@ export default class Autocompleted extends React.Component {
 
     textArray[wordIndex] = wordSuggestion.literal || wordSuggestion.content;
 
-    this.setState({ value: textArray.reduce((initial, value) => initial + " " + value) });
+    this.setState({ value: textArray.reduce((initial, value) => initial + ' ' + value) });
     this.hideAllSuggestions();
   }
 
@@ -82,7 +81,7 @@ export default class Autocompleted extends React.Component {
     this.setState({ value });
     this.props.handleChange(value);
     var eventContext = Caret.matchEvent(event);
-    if (eventContext.word.trim() != '') {
+    if (eventContext.word.trim() !== '') {
       const wordSuggestionFunction = (this.props.handleWordSuggestion || function () {});
       wordSuggestionFunction(eventContext.text, eventContext.word);
     }
@@ -131,6 +130,8 @@ export default class Autocompleted extends React.Component {
           className='sui-Autocompleted-input'
           type='text'
           onChange={this.handleChange.bind(this)}
+          onFocus={this.props.handleFocus}
+          onBlur={this.props.handleBlur}
           onKeyDown={this.handleKeyDown.bind(this)}/>
         <span
           className='sui-Autocompleted-clear'
@@ -147,6 +148,8 @@ Autocompleted.propTypes = {
   suggests: React.PropTypes.array.isRequired,
   wordSuggestions: React.PropTypes.array,
   handleChange: React.PropTypes.func.isRequired,
+  handleFocus: React.PropTypes.func,
+  handleBlur: React.PropTypes.func,
   handleSelect: React.PropTypes.func.isRequired,
   handleWordSuggestion: React.PropTypes.func,
   initialValue: React.PropTypes.string
