@@ -47,7 +47,7 @@ export default class ListSelector {
   }
 
   canSelect() {
-    return this.selector != null && this.selector.length > 0;
+    return this.selector !== null && this.selector.length > 0;
   }
 
   static __callback(cb) {

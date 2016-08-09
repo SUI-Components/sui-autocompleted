@@ -11,15 +11,15 @@ export default class Keyboard {
     this._event.stopBubbling = () => {
       event.stopPropagation();
       event.preventDefault();
-    }
+    };
   }
 
   on(keypress, work) {
     if (!Array.isArray(keypress)) {
       return this.__dispatch([ keypress ], work);
-    } else {
-      return this.__dispatch(keypress, work);
     }
+
+    return this.__dispatch(keypress, work);
   }
 
   ignore(keypress) {
@@ -36,9 +36,9 @@ export default class Keyboard {
     if (kpArray.some(kp => key === kp)) {
       work(this._event);
       return new AlreadyDispatchedKeyboard();
-    } else {
-      return this;
     }
+
+    return this;
   }
 }
 

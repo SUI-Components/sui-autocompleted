@@ -7,10 +7,10 @@ export default class WordSuggestionList extends React.Component {
   }
   render() {
     return (
-      <ul className='sui-Autocompleted-word-suggestion-results'>
+      <ul className='sui-Autocompleted-suggestion'>
         {
           this.props.wordSuggestions.map((suggest, index) => {
-            return (<ListItem {...this.props} key={suggest.id} item={suggest} isActive={index === this.props.active}/>);
+            return (<ListItem {...this.props} key={suggest.id} item={suggest} isActive={index === this.props.active} />);
           })
         }
       </ul>
