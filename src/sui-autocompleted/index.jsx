@@ -9,21 +9,23 @@ const ENTER = 'Enter';
 const ESCAPE = 'Escape';
 
 const moveDown = function() {
+  const {active} = this.state;
   const lastPosition = this.props.suggests.length - 1;
-  return this.state.active === lastPosition ? this.state.active
-                                            : this.state.active + DELTA_MOVE;
+  return active === lastPosition ? active
+                                 : active + DELTA_MOVE;
 };
 
 const moveUp = function() {
-  return this.state.active === FIRST_POSITION ? this.state.active
-                                              : this.state.active - DELTA_MOVE;
+  const {active} = this.state;
+  return active === FIRST_POSITION ? active
+                                   : active - DELTA_MOVE;
 };
 
 const upDownHandler = function(event) {
   // Never go to negative values or value higher than the list length
-  const active = event.key === DOWN ? moveDown.bind(this)
-                                    : moveUp.bind(this);
-  this.setState({active: active()});
+  const active = event.key === DOWN ? moveDown.bind(this)()
+                                    : moveUp.bind(this)();
+  this.setState({active});
   event.stopPropagation();
   event.preventDefault();
 };

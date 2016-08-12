@@ -26,6 +26,7 @@ export default class AutocompletedContainer extends React.Component {
   }
 
   handleSelect(suggest) {
+    console.log(suggest);
     alert( suggest.content );
     this.setState({suggests: EMPTY_SUGGESTS});
   }

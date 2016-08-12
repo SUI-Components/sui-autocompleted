@@ -35,6 +35,7 @@ export default class AutocompletedComponentContainer extends Component {
   }
 
   handleSelect(suggest) {
+    console.log(suggest);
     alert(`Selected item: ${suggest.literal}`);
     this.setState({suggests: EMPTY_SUGGESTS});
   }
