@@ -1,54 +1,37 @@
 /* eslint no-alert:0 */
 
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Autocompleted} from '../src';
+import suggests from './mock_suggests';
 
 const EMPTY_SUGGESTS = [];
-const suggests = [
-{
-  id: 0,
-  value: 'ruby',
-  content: 'ruby'
-}, {
-  id: 1,
-  value: 'javascript',
-  content: 'javascript'
-}, {
-  id: 2,
-  value: 'php',
-  content: 'php'
-}, {
-  id: 3,
-  value: 'java',
-  content: 'java'
-}, {
-  id: 4,
-  value: 'HipHophp',
-  content: 'HipHophp'
-}
-];
 
-class SuggestItem extends React.Component {
-  render(){
-    return (<p className='sui-SuggestItem'>{this.props.text}</p>)
-  }
+function SuggestItem ({text}) {
+  return (<p className='sui-SuggestItem'>{text}</p>);
 }
 
-export default class AutocompletedComponentContainer extends React.Component {
-  constructor() {
+SuggestItem.propTypes = {
+  text: PropTypes.string
+};
+
+export default class AutocompletedComponentContainer extends Component {
+  constructor () {
     super();
     this.state = {suggests: EMPTY_SUGGESTS};
   }
 
-  handleChange(string) {
+  handleChange (string) {
+    let newSuggests = EMPTY_SUGGESTS;
     if (string) {
-      this.setState({
-        suggests: suggests.filter(suggest => suggest.content.includes(string))
-                          .map((object) => ({...object, literal: object.content, content: (<SuggestItem text={object.content}/>)}))
-      });
-    } else {
-      this.setState({suggests: EMPTY_SUGGESTS});
+      newSuggests = suggests
+                    .filter(suggest => suggest.content.includes(string))
+                    .map(object => ({
+                      ...object,
+                      literal: object.content,
+                      content: (<SuggestItem text={object.content}/>)
+                    }));
     }
+    this.setState({suggests: newSuggests});
   }
 
   handleSelect(suggest) {
@@ -66,4 +49,3 @@ export default class AutocompletedComponentContainer extends React.Component {
     );
   }
 }
-

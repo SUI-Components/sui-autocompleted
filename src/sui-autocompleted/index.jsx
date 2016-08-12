@@ -101,7 +101,7 @@ export default class Autocompleted extends Component {
            : null;
   }
 
-  render() {
+  render () {
     return (
       <div className='sui-Autocompleted'>
         <input
