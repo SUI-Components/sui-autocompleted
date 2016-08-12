@@ -27,8 +27,8 @@ describe('sui-autocompleted component test suite', function () {
       expect(component).toExist();
     });
 
-    describe("props.initialValue", function () {
-      it("must set the initial value of the input text on construction", function () {
+    describe('props.initialValue', function () {
+      it('must set the initial value of the input text on construction', function () {
         const expectedValue = 'Hello world!';
         component = createComponent(Autocompleted, { initialValue: expectedValue });
         const inputValue = component.props.children[0].props.value;
