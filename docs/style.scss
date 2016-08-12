@@ -2,7 +2,10 @@
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -34,4 +37,8 @@ html {
 .Preview-demo {
   margin: 10px auto;
   text-align: center;
+}
+
+.sui-Autocompleted-results {
+  z-index: 1;
 }

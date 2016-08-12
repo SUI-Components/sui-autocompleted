@@ -111,7 +111,9 @@ export default class Autocompleted extends Component {
           className='sui-Autocompleted-input'
           type='text'
           onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}/>
+          onKeyDown={this.handleKeyDown}
+          onFocus={this.props.handleFocus}
+          onBlur={this.props.handleBlur} />
         <span
           className='sui-Autocompleted-clear'
           onClick={this.handleClear}></span>
@@ -122,11 +124,13 @@ export default class Autocompleted extends Component {
 }
 
 Autocompleted.propTypes = {
-  placeholder: PropTypes.string,
-  suggests: PropTypes.array.isRequired,
+  handleBlur: PropTypes.func,
   handleChange: PropTypes.func.isRequired,
+  handleFocus: PropTypes.func,
   handleSelect: PropTypes.func.isRequired,
-  initialValue: PropTypes.string
+  initialValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  suggests: PropTypes.array.isRequired
 };
 
 Autocompleted.defaultProps = {
