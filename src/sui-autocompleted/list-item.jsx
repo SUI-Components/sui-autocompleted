@@ -1,28 +1,23 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import cx from 'classnames';
 
-export default class ListItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+export default function ListItem ({handleSelect, isActive, item}) {
 
-  render() {
-    const classes = cx({
-      'sui-Autocompleted-item': true,
-      'sui-Autocompleted-item--active': this.props.isActive
-    });
-    return (
-      <li
-        className={classes}
-        onClick={this.props.handleSelect.bind(null, this.props.item)}>
-          {this.props.item.content}
-      </li>
-    );
-  }
+  const classes = cx('sui-Autocompleted-item', {
+    'sui-Autocompleted-item--active': isActive
+  });
+
+  return (
+    <li
+      className={classes}
+      onClick={handleSelect.bind(null, item)}>
+        {item.content}
+    </li>
+  );
 }
 
 ListItem.propTypes = {
-  item: React.PropTypes.object,
-  handleSelect: React.PropTypes.func,
-  isActive: React.PropTypes.bool
+  item: PropTypes.object,
+  handleSelect: PropTypes.func,
+  isActive: PropTypes.bool
 };
