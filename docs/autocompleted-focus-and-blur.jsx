@@ -7,12 +7,12 @@ import suggests from './mock_suggests';
 const EMPTY_SUGGESTS = [];
 
 export default class AutocompletedWithFocusAndBlur extends React.Component {
-  constructor() {
+  constructor () {
     super();
     this.state = {suggests: EMPTY_SUGGESTS};
   }
 
-  handleChange(string) {
+  handleChange (string) {
     if (string) {
       this.setState({
         suggests: suggests.filter(suggest => suggest.content.includes(string))
@@ -22,25 +22,21 @@ export default class AutocompletedWithFocusAndBlur extends React.Component {
     }
   }
 
-  handleWordSuggestion(text, word) {
-    this.setState({ wordSuggestions: suggests.filter(suggest => suggest.content.includes(word)) });
-  }
-
-  handleSelect(suggest) {
+  handleSelect (suggest) {
     console.log(suggest);
     alert(`Selected item: ${suggest.content}`);
     this.setState({suggests: EMPTY_SUGGESTS});
   }
 
-  handleFocus() {
+  handleFocus () {
     console.log('Focus');
   }
 
-  handleBlur() {
+  handleBlur () {
     console.log('Blur');
   }
 
-  render() {
+  render () {
     return (
       <Autocompleted
         placeholder='Autocomplete With Focus and Blur'
@@ -48,8 +44,6 @@ export default class AutocompletedWithFocusAndBlur extends React.Component {
         handleFocus={this.handleFocus.bind(this)}
         handleBlur={this.handleBlur.bind(this)}
         handleSelect={this.handleSelect.bind(this)}
-        handleWordSuggestion={this.handleWordSuggestion.bind(this)}
-        wordSuggestions={this.state.wordSuggestions}
         suggests={this.state.suggests}/>
     );
   }

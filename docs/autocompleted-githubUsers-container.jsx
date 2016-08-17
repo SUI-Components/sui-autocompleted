@@ -1,4 +1,4 @@
-/* eslint no-alert:0 */
+/* eslint-disable no-alert, no-console */
 
 import React from 'react';
 import {Autocompleted} from '../src';
