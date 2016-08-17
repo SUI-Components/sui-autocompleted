@@ -2,31 +2,9 @@
 
 import React from 'react';
 import {Autocompleted} from '../src';
+import suggests from './mock_suggests';
 
 const EMPTY_SUGGESTS = [];
-const suggests = [
-{
-  id: 0,
-  value: 'ruby',
-  content: 'ruby'
-}, {
-  id: 1,
-  value: 'javascript',
-  content: 'javascript'
-}, {
-  id: 2,
-  value: 'php',
-  content: 'php'
-}, {
-  id: 3,
-  value: 'java',
-  content: 'java'
-}, {
-  id: 4,
-  value: 'HipHophp',
-  content: 'HipHophp'
-}
-];
 
 export default class AutocompletedContainer extends React.Component {
   constructor() {
@@ -45,6 +23,7 @@ export default class AutocompletedContainer extends React.Component {
   }
 
   handleSelect(suggest) {
+    console.log(suggest);
     alert(`Selected item: ${suggest.content}`);
     this.setState({suggests: EMPTY_SUGGESTS});
   }

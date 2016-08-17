@@ -68,12 +68,12 @@
         border-bottom: 1px solid $selected-color;
       }
 
-      &:after {
+      &::after {
         content: '|';
         padding-left: 16px;
       }
 
-      &:last-child:after {
+      &:last-child::after {
         content: '';
       }
     }

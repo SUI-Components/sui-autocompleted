@@ -1,126 +1,109 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import ResultsList from './results-list';
-import WordSuggestionList from './word-suggestion-list';
-import Keyboard from './utils/keyboard';
-import Caret from './utils/caret';
-import ListSelector from './utils/list-selector';
 
-export default class Autocompleted extends React.Component {
+const FIRST_POSITION = 0;
+const DELTA_MOVE = 1;
+const UP = 'ArrowUp';
+const DOWN = 'ArrowDown';
+const ENTER = 'Enter';
+const ESCAPE = 'Escape';
+
+const moveDown = function() {
+  const {active} = this.state;
+  const lastPosition = this.props.suggests.length - 1;
+  return active === lastPosition ? active
+                                 : active + DELTA_MOVE;
+};
+
+const moveUp = function() {
+  const {active} = this.state;
+  return active === FIRST_POSITION ? active
+                                   : active - DELTA_MOVE;
+};
+
+const upDownHandler = function(event) {
+  // Never go to negative values or value higher than the list length
+  const active = event.key === DOWN ? moveDown.bind(this)()
+                                    : moveUp.bind(this)();
+  this.setState({active});
+  event.stopPropagation();
+  event.preventDefault();
+};
+
+const enterHandler = function() {
+  const suggest = this.props.suggests[this.state.active];
+
+  if (suggest) {
+    const value = suggest.literal || suggest.content;
+    this.setState({value});
+    this.handleSelect(suggest);
+  }
+};
+
+const escapeHandler = function () {
+  this.setState({showResultList: false, active: null});
+};
+
+export default class Autocompleted extends Component {
+
   constructor (props) {
     super(props);
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClear = this.handleClear.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
     this.state = {
-      value: props.initialValue || '',
-      wordSelector: new ListSelector(),
-      suggestionSelector: new ListSelector()
+      active: FIRST_POSITION,
+      value: props.initialValue
     };
   }
 
-  nextSuggestion(event) {
-    this.setState({ suggestionSelector: this.state.suggestionSelector.selectNext(event.stopBubbling) });
-  }
-
-  previousSuggestion(event) {
-    this.setState({ suggestionSelector: this.state.suggestionSelector.selectPrevious(event.stopBubbling) });
-  }
-
-  selectSuggestion() {
-    this.handleSelect(this.state.suggestionSelector.selectedValue());
-  }
-
-  handleSelect (option) {
-    this.setState({ value: option.literal || option.content });
-    this.hideAllSuggestions();
-  }
-
-  nextWord(event) {
-    this.setState({ wordSelector: this.state.wordSelector.selectNext(event.stopBubbling) });
-  }
-
-  previousWord(event) {
-    this.setState({ wordSelector: this.state.wordSelector.selectPrevious(event.stopBubbling) });
-  }
-
-  selectWord(event) {
-    const wordContext = Caret.matchEvent(event);
-    if (!this.state.showWordSuggestions) {
-      return this.hideAllSuggestions();
-    }
-    const wordSuggestionObject = this.state.wordSelector.selectedValue();
-
-    if (!wordSuggestionObject) {
-      return this.hideAllSuggestions();
-    }
-
-    this.handleSelectWord(wordContext, wordSuggestionObject);
-  }
-
-  handleSelectWord(selectionContext, wordSuggestion) {
-    const wordIndex = selectionContext.wordIndex;
-    const textArray = selectionContext.text.split(' ');
-
-    textArray[wordIndex] = wordSuggestion.literal || wordSuggestion.content;
-
-    this.setState({ value: textArray.reduce((initial, value) => initial + ' ' + value) });
-    this.hideAllSuggestions();
-  }
-
-  handleWordSuggestionSelect (word) {
-    const inputText = this.refs.autocompletedInput;
-    const wordContext = Caret.matchField(inputText);
-    this.handleSelectWord(wordContext, word);
-    this.refs.autocompletedInput.focus();
-  }
-
-  hideAllSuggestions() {
-    this.setState({showWordSuggestions: false, showResultList: false});
-  }
 
   handleChange (event) {
     const value = event.target.value;
-    this.setState({ value });
+    this.setState({value, active: FIRST_POSITION});
     this.props.handleChange(value);
-    var eventContext = Caret.matchEvent(event);
-    if (eventContext.word.trim() !== '') {
-      const wordSuggestionFunction = (this.props.handleWordSuggestion || function () {});
-      wordSuggestionFunction(eventContext.text, eventContext.word);
-    }
+  }
+
+  handleClear () {
+    this.handleChange({target: {value: null}});
+  }
+
+  handleSelect (suggest) {
+    this.setState({value: suggest.literal || suggest.content});
+    this.props.handleSelect(suggest);
   }
 
   handleKeyDown (event) {
-    var kb = new Keyboard(event);
-    kb.on([Keyboard.DOWN], this.nextSuggestion.bind(this))
-      .on([Keyboard.UP], this.previousSuggestion.bind(this))
-      .on([Keyboard.RIGHT], this.nextWord.bind(this))
-      .on([Keyboard.LEFT], this.previousWord.bind(this))
-      .on([Keyboard.ENTER], this.selectSuggestion.bind(this))
-      .on([Keyboard.ESCAPE], this.hideAllSuggestions.bind(this))
-      .on([Keyboard.SPACE], this.selectWord.bind(this))
-      .ignore([Keyboard.CONTROL, Keyboard.SHIFT])
-      .otherwise(() => this.setState({showResultList: true, showWordSuggestions: true}));
+    this.setState({showResultList: true});
+
+    switch (event.key) {
+      case UP:
+      case DOWN:
+        upDownHandler.bind(this)(event);
+      break;
+      case ENTER:
+        enterHandler.bind(this)();
+      break;
+      case ESCAPE:
+        escapeHandler.bind(this)();
+      break;
+    }
   }
 
-  render() {
-    this.state.suggestionSelector = this.state.suggestionSelector.containing(this.props.suggests);
-    this.state.wordSelector = this.state.wordSelector.containing(this.props.wordSuggestions);
+  renderResultList () {
+    const { suggests } = this.props;
+    return suggests && suggests.length > 0
+           ? (<ResultsList
+               {...this.props}
+               handleSelect={this.handleSelect}
+               active={this.state.active}/>)
+           : null;
+  }
 
-    const wordSuggestionList = this.state.wordSelector.canSelect() ?
-      (<WordSuggestionList
-        {...this.props}
-          wordSuggestions={this.state.wordSelector.allValues()}
-          handleSelect={this.handleWordSuggestionSelect.bind(this)}
-          active={this.state.wordSelector.selectedIndex()}
-        />
-    ) : null;
-
-    const resultList = this.state.suggestionSelector.canSelect() ?
-      (<ResultsList
-        {...this.props}
-          suggests={this.state.suggestionSelector.allValues()}
-          handleSelect={this.handleSelect.bind(this)}
-          active={this.state.suggestionSelector.selectedIndex()}/>
-    ) : null;
-
+  render () {
     return (
       <div className='sui-Autocompleted'>
         <input
@@ -129,28 +112,29 @@ export default class Autocompleted extends React.Component {
           placeholder={this.props.placeholder}
           className='sui-Autocompleted-input'
           type='text'
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
           onFocus={this.props.handleFocus}
-          onBlur={this.props.handleBlur}
-          onKeyDown={this.handleKeyDown.bind(this)}/>
+          onBlur={this.props.handleBlur} />
         <span
           className='sui-Autocompleted-clear'
-          onClick={this.handleChange.bind(this, {target: {value: ''}})}></span>
-          { this.state.showWordSuggestions && wordSuggestionList }
-          { this.state.showResultList && resultList}
+          onClick={this.handleClear}></span>
+        {this.state.showResultList && this.renderResultList()}
       </div>
     );
   }
 }
 
 Autocompleted.propTypes = {
-  placeholder: React.PropTypes.string,
-  suggests: React.PropTypes.array.isRequired,
-  wordSuggestions: React.PropTypes.array,
-  handleChange: React.PropTypes.func.isRequired,
-  handleFocus: React.PropTypes.func,
-  handleBlur: React.PropTypes.func,
-  handleSelect: React.PropTypes.func.isRequired,
-  handleWordSuggestion: React.PropTypes.func,
-  initialValue: React.PropTypes.string
+  handleBlur: PropTypes.func,
+  handleChange: PropTypes.func.isRequired,
+  handleFocus: PropTypes.func,
+  handleSelect: PropTypes.func.isRequired,
+  initialValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  suggests: PropTypes.array.isRequired
+};
+
+Autocompleted.defaultProps = {
+  initialValue: ''
 };

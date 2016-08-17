@@ -1,7 +1,7 @@
-import React from "react";
-import {createComponent} from "./test-utilities";
-import expect from "expect";
-import Autocompleted from "../src/sui-autocompleted";
+import React from 'react'; // eslint-disable-line no-unused-vars
+import {createComponent} from './test-utilities';
+import expect from 'expect';
+import Autocompleted from '../src/sui-autocompleted';
 
 describe('sui-autocompleted component test suite', function () {
 
@@ -26,8 +26,8 @@ describe('sui-autocompleted component test suite', function () {
       expect(component).toExist();
     });
 
-    describe("props.initialValue", function () {
-      it("must set the initial value of the input text on construction", function () {
+    describe('props.initialValue', function () {
+      it('must set the initial value of the input text on construction', function () {
         const expectedValue = 'Hello world!';
         component = createComponent(Autocompleted, { initialValue: expectedValue });
         const inputValue = component.props.children[0].props.value;

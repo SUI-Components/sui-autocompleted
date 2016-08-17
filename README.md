@@ -45,8 +45,10 @@ The component exposes the following props:
 	```javascript
 		const handleSelect = function( suggestionValue ){ ... }
 	```
-* handleWordSuggestion (Function): **Optional** This function is called for suggestions on the current word
-* wordSuggestions (Array) **Optional** Array of SuggestionObjects for the current word
+
+* handleBlur (Function): This function is called everytime user exits the input.
+
+* handleFocus (Function): This funciton is called everytime user focus on the input.
 
 and then you have to create containers which one setting that properties in the sui-autocompleted component. You can view an example of this kind of container in the [doc folder](https://github.com/scm-spain/sui-autocompleted/blob/master/docs/autocompleted-container.jsx).
 
@@ -59,7 +61,7 @@ An SuggestObject is a plain JS Object with these specials keys:
     'id': [Unique id for the suggestion],
     'value': [value to be passed to the handleSelect callback function]
     'content': [React Component] or [Text to be show in the UI]
-    'literal': [String] This key is REQUIRED only if you are using a ReactJS Component like a content. It is used to decide which text has to be put in the input text when this suggestion is selected, in other case content will be used,
+    'literal': [String] This key is REQUIRED only if you are using a ReactJS Component like a content. It is used to decide which text has to be put in the input text when this suggestion is selected, in other case content will be used,    
 }
 ```
 
