@@ -69,7 +69,7 @@ export default class Autocompleted extends Component {
 
   handleClear () {
     this.handleChange({target: {value: null}});
-    this.autocompletedInput.focus();
+    this.refs.autocompletedInput.focus();
   }
 
   handleSelect (suggest) {
@@ -108,7 +108,7 @@ export default class Autocompleted extends Component {
     return (
       <div className='sui-Autocompleted'>
         <input
-          ref={(ref) => this.autocompletedInput = ref}
+          ref='autocompletedInput'
           value={this.state.value}
           placeholder={this.props.placeholder}
           className='sui-Autocompleted-input'
