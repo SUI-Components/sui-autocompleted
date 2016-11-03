@@ -48,7 +48,8 @@ The component exposes the following props:
 
 * handleBlur (Function): This function is called everytime user exits the input.
 
-* handleFocus (Function): This funciton is called everytime user focus on the input.
+* handleFocus (Function): This function is called everytime user focus on the input.
+* defaultPosition (Number): **Optional** Default position for the autocomplete active option. Defaults to `0`.
 
 and then you have to create containers which one setting that properties in the sui-autocompleted component. You can view an example of this kind of container in the [doc folder](https://github.com/scm-spain/sui-autocompleted/blob/master/docs/autocompleted-container.jsx).
 

@@ -31,10 +31,12 @@ export default class AutocompletedContainer extends React.Component {
   render() {
     return (
       <Autocompleted
-          placeholder='Programming Laguages'
-          handleChange={this.handleChange.bind(this)}
-          handleSelect={this.handleSelect.bind(this)}
-          suggests={this.state.suggests}/>
+        placeholder='Programming Laguages'
+        handleChange={this.handleChange.bind(this)}
+        handleSelect={this.handleSelect.bind(this)}
+        suggests={this.state.suggests}
+        defaultPosition={-1}
+      />
     );
   }
 }

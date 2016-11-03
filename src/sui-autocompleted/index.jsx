@@ -17,14 +17,15 @@ const moveDown = function() {
 
 const moveUp = function() {
   const {active} = this.state;
-  return active === FIRST_POSITION ? active
+  const {defaultPosition} = this.props;
+  return active === defaultPosition ? active
                                    : active - DELTA_MOVE;
 };
 
 const upDownHandler = function(event) {
   // Never go to negative values or value higher than the list length
-  const active = event.key === DOWN ? moveDown.bind(this)()
-                                    : moveUp.bind(this)();
+  const active = event.key === DOWN ? moveDown.call(this)
+                                    : moveUp.call(this);
   this.setState({active});
   event.stopPropagation();
   event.preventDefault();
@@ -55,7 +56,7 @@ export default class Autocompleted extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = {
-      active: FIRST_POSITION,
+      active: props.defaultPosition,
       value: props.initialValue
     };
   }
@@ -63,7 +64,11 @@ export default class Autocompleted extends Component {
 
   handleChange (event) {
     const value = event.target.value;
-    this.setState({value, active: FIRST_POSITION});
+    const {defaultPosition} = this.props;
+    this.setState({
+      value,
+      active: defaultPosition
+    });
     this.props.handleChange(value);
   }
 
@@ -96,11 +101,13 @@ export default class Autocompleted extends Component {
 
   renderResultList () {
     const { suggests } = this.props;
+    const { active } = this.state;
+
     return suggests && suggests.length > 0
            ? (<ResultsList
                {...this.props}
                handleSelect={this.handleSelect}
-               active={this.state.active}/>)
+               active={active}/>)
            : null;
   }
 
@@ -134,9 +141,11 @@ Autocompleted.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
-  suggests: PropTypes.array.isRequired
+  suggests: PropTypes.array.isRequired,
+  defaultPosition: PropTypes.number
 };
 
 Autocompleted.defaultProps = {
-  initialValue: ''
+  initialValue: '',
+  defaultPosition: FIRST_POSITION
 };
