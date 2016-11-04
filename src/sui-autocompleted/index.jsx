@@ -8,9 +8,12 @@ const ENTER = 'Enter';
 const ESCAPE = 'Escape';
 
 export default class Autocompleted extends Component {
-  constructor (props) {
-    super(props);
+  constructor (...args) {
+    super(...args);
 
+    const { selectFirstByDefault, initialValue } = this.props;
+
+    this.defaultPosition = selectFirstByDefault ? 0 : -1;
     this.moveDown = this.moveDown.bind(this);
     this.moveUp = this.moveUp.bind(this);
     this.upDownHandler = this.upDownHandler.bind(this);
@@ -21,12 +24,8 @@ export default class Autocompleted extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
 
-    const { selectFirstByDefault, initialValue } = props;
-    const defaultPosition = selectFirstByDefault ? 0 : -1;
-
     this.state = {
-      defaultPosition,
-      active: defaultPosition,
+      active: this.defaultPosition,
       value: initialValue,
       showResultList: false
     };
@@ -41,8 +40,8 @@ export default class Autocompleted extends Component {
   }
 
   moveUp () {
-    const { active, defaultPosition } = this.state;
-    return active === defaultPosition
+    const { active } = this.state;
+    return active === this.defaultPosition
       ? active
       : active - DELTA_MOVE;
   }
@@ -76,10 +75,9 @@ export default class Autocompleted extends Component {
 
   handleChange (event) {
     const value = event.target.value;
-    const { defaultPosition } = this.state;
     this.setState({
       value,
-      active: defaultPosition
+      active: this.defaultPosition
     });
     this.props.handleChange(value);
   }
