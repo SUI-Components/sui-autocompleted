@@ -11,8 +11,9 @@ export default class Autocompleted extends Component {
   constructor (...args) {
     super(...args);
 
-    const { selectFirstByDefault, initialValue } = this.props;
+    const { selectFirstByDefault, initialValue, focus } = this.props;
 
+    this.input = null;
     this.defaultPosition = selectFirstByDefault ? 0 : -1;
     this.moveDown = this.moveDown.bind(this);
     this.moveUp = this.moveUp.bind(this);
@@ -23,11 +24,13 @@ export default class Autocompleted extends Component {
     this.handleClear = this.handleClear.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.focusInput = this.focusInput.bind(this);
 
     this.state = {
       active: this.defaultPosition,
       value: initialValue,
-      showResultList: false
+      showResultList: false,
+      focus: focus
     };
   }
 
@@ -44,6 +47,24 @@ export default class Autocompleted extends Component {
     return active === this.defaultPosition
       ? active
       : active - DELTA_MOVE;
+  }
+
+  componentDidMount () {
+    if (this.state.focus) {
+      this.focusInput();
+    }
+  }
+
+  componentWillReceiveProps ({ focus }) {
+    if (this.state.focus !== focus) {
+      this.setState({ focus });
+    }
+  }
+
+  componentWillUpdate (nextProps, { focus }) {
+    if (focus) {
+      this.focusInput();
+    }
   }
 
   upDownHandler (event) {
@@ -73,6 +94,10 @@ export default class Autocompleted extends Component {
     });
   }
 
+  focusInput () {
+    this.input.focus();
+  }
+
   handleChange (event) {
     const value = event.target.value;
     this.setState({
@@ -88,7 +113,7 @@ export default class Autocompleted extends Component {
         value: null
       }
     });
-    this.refs.autocompletedInput.focus();
+    this.focusInput();
   }
 
   handleSelect (suggest) {
@@ -135,11 +160,10 @@ export default class Autocompleted extends Component {
   render () {
     const { placeholder, handleFocus, handleBlur } = this.props;
     const { value, showResultList } = this.state;
-
     return (
       <div className='sui-Autocompleted'>
         <input
-          ref='autocompletedInput'
+          ref={ node => { this.input = node; }}
           value={value}
           placeholder={placeholder}
           className='sui-Autocompleted-input'
@@ -168,10 +192,12 @@ Autocompleted.propTypes = {
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
   suggests: PropTypes.array.isRequired,
-  selectFirstByDefault: PropTypes.bool
+  selectFirstByDefault: PropTypes.bool,
+  focus: PropTypes.bool
 };
 
 Autocompleted.defaultProps = {
   initialValue: '',
-  selectFirstByDefault: true
+  selectFirstByDefault: true,
+  focus: false
 };

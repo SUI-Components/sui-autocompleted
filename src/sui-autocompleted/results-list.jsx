@@ -7,7 +7,7 @@ export default function ResultsList (props) {
       {props.suggests.map((suggest, index) =>
         ( <ListItem
             {...props}
-            key={suggest.id}
+            key={suggest.id || index}
             item={suggest}
             isActive={index === props.active}/>
         )
