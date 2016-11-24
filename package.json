@@ -1,6 +1,6 @@
 {
   "name": "@schibstedspain/sui-autocompleted",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "main": "dist/",
   "contributors": [
     {
@@ -32,6 +32,11 @@
       "name": "Miguel Ángel Durán",
       "email": "miduga@gmail.com",
       "url": "https://github.com/miduga"
+    },
+    {
+      "name": "Joan Claret",
+      "email": "joan.claret@scmspain.com",
+      "url": "https://github.com/joanclaret"
     }
   ],
   "scripts": {
