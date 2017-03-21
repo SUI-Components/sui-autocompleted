@@ -2,43 +2,6 @@
   "name": "@schibstedspain/sui-autocompleted",
   "version": "5.1.0",
   "main": "dist/",
-  "contributors": [
-    {
-      "name": "Daniel de la Cruz",
-      "email": "daniel.delacruz@scmspain.com",
-      "url": "https://github.com/danderu"
-    },
-    {
-      "name": "David Garcia",
-      "email": "david.garcia@scmspain.com",
-      "url": "https://github.com/davecarter"
-    },
-    {
-      "name": "Carlos Villuendas",
-      "email": "carlos.villuendas@scmspain.com",
-      "url": "https://github.com/carlosvillu"
-    },
-    {
-      "name": "Joan Leon",
-      "email": "joan.leon@infojobs.net",
-      "url": "https://github.com/nucliweb"
-    },
-    {
-      "name": "Kevin Mas",
-      "email": "masruizkevin@gmail.com",
-      "url": "https://github.com/kmruiz"
-    },
-    {
-      "name": "Miguel Ángel Durán",
-      "email": "miduga@gmail.com",
-      "url": "https://github.com/miduga"
-    },
-    {
-      "name": "Joan Claret",
-      "email": "joan.claret@scmspain.com",
-      "url": "https://github.com/joanclaret"
-    }
-  ],
   "scripts": {
     "clean:dist": "rm -Rf ./dist/*",
     "predist": "npm run clean:dist -s",
