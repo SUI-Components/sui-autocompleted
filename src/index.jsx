@@ -1,3 +1,3 @@
-import Autocompleted from './sui-autocompleted';
+import Autocompleted from './sui-autocompleted'
 
-export {Autocompleted};
+export {Autocompleted}

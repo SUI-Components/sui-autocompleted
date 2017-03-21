@@ -1,52 +1,51 @@
-/* eslint-disable no-alert, no-console */
+import React, {Component, PropTypes} from 'react'
+import {Autocompleted} from '../src'
+import suggests from './mock_suggests'
 
-import React, {Component, PropTypes} from 'react';
-import {Autocompleted} from '../src';
-import suggests from './mock_suggests';
-
-const EMPTY_SUGGESTS = [];
+const EMPTY_SUGGESTS = []
 
 function SuggestItem ({text}) {
-  return (<p className='sui-SuggestItem'>{text}</p>);
+  return (<p className='sui-SuggestItem'>{text}</p>)
 }
 
 SuggestItem.propTypes = {
   text: PropTypes.string
-};
+}
 
 export default class AutocompletedComponentContainer extends Component {
   constructor () {
-    super();
-    this.state = {suggests: EMPTY_SUGGESTS};
+    super()
+    this.state = {suggests: EMPTY_SUGGESTS}
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
   }
 
   handleChange (string) {
-    let newSuggests = EMPTY_SUGGESTS;
+    let newSuggests = EMPTY_SUGGESTS
     if (string) {
       newSuggests = suggests
                     .filter(suggest => suggest.content.includes(string))
                     .map(object => ({
                       ...object,
                       literal: object.content,
-                      content: (<SuggestItem text={object.content}/>)
-                    }));
+                      content: (<SuggestItem text={object.content} />)
+                    }))
     }
-    this.setState({suggests: newSuggests});
+    this.setState({suggests: newSuggests})
   }
 
-  handleSelect(suggest) {
-    console.log(suggest);
-    alert(`Selected item: ${suggest.literal}`);
-    this.setState({suggests: EMPTY_SUGGESTS});
+  handleSelect (suggest) {
+    alert(`Selected item: ${suggest.literal}`) // eslint-disable-line no-alert, no-undef
+    this.setState({suggests: EMPTY_SUGGESTS})
   }
 
-  render() {
+  render () {
     return (
       <Autocompleted
-          placeholder='Components container'
-          handleChange={this.handleChange.bind(this)}
-          handleSelect={this.handleSelect.bind(this)}
-          suggests={this.state.suggests}/>
-    );
+        placeholder='Components container'
+        handleChange={this.handleChange}
+        handleSelect={this.handleSelect}
+        suggests={this.state.suggests} />
+    )
   }
 }
