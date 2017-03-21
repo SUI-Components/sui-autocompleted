@@ -1,5 +1,3 @@
-/* eslint-disable no-alert, no-console */
-
 import React, {Component, PropTypes} from 'react'
 import {Autocompleted} from '../src'
 import suggests from './mock_suggests'
@@ -18,6 +16,8 @@ export default class AutocompletedComponentContainer extends Component {
   constructor () {
     super()
     this.state = {suggests: EMPTY_SUGGESTS}
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
   }
 
   handleChange (string) {
@@ -35,8 +35,7 @@ export default class AutocompletedComponentContainer extends Component {
   }
 
   handleSelect (suggest) {
-    console.log(suggest)
-    alert(`Selected item: ${suggest.literal}`)
+    alert(`Selected item: ${suggest.literal}`) // eslint-disable-line no-alert, no-undef
     this.setState({suggests: EMPTY_SUGGESTS})
   }
 
@@ -44,8 +43,8 @@ export default class AutocompletedComponentContainer extends Component {
     return (
       <Autocompleted
         placeholder='Components container'
-        handleChange={this.handleChange.bind(this)}
-        handleSelect={this.handleSelect.bind(this)}
+        handleChange={this.handleChange}
+        handleSelect={this.handleSelect}
         suggests={this.state.suggests} />
     )
   }

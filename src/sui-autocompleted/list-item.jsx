@@ -6,6 +6,7 @@ export default function ListItem ({handleSelect, isActive, item}) {
     'sui-Autocompleted-item--active': isActive
   })
 
+  /* eslint react/jsx-no-bind: "warn" */
   return (
     <li
       className={classes}

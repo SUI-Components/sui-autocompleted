@@ -10,6 +10,10 @@ export default class AutocompletedWithFocusAndBlur extends React.Component {
   constructor () {
     super()
     this.state = {suggests: EMPTY_SUGGESTS}
+    this.handleSelect = this.handleSelect.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
 
   handleChange (string) {
@@ -24,7 +28,7 @@ export default class AutocompletedWithFocusAndBlur extends React.Component {
 
   handleSelect (suggest) {
     console.log(suggest)
-    alert(`Selected item: ${suggest.content}`)
+    alert(`Selected item: ${suggest.content}`) // eslint-disable-line no-alert, no-undef
     this.setState({suggests: EMPTY_SUGGESTS})
   }
 
@@ -40,10 +44,10 @@ export default class AutocompletedWithFocusAndBlur extends React.Component {
     return (
       <Autocompleted
         placeholder='Autocomplete With Focus and Blur'
-        handleChange={this.handleChange.bind(this)}
-        handleFocus={this.handleFocus.bind(this)}
-        handleBlur={this.handleBlur.bind(this)}
-        handleSelect={this.handleSelect.bind(this)}
+        handleChange={this.handleChange}
+        handleFocus={this.handleFocus}
+        handleBlur={this.handleBlur}
+        handleSelect={this.handleSelect}
         suggests={this.state.suggests} />
     )
   }
