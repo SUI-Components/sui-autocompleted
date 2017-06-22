@@ -110,7 +110,7 @@ export default class Autocompleted extends Component {
   handleClear () {
     this.handleChange({
       target: {
-        value: null
+        value: ''
       }
     })
     this.focusInput()
