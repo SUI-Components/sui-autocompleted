@@ -1,6 +1,6 @@
 {
   "name": "@schibstedspain/sui-autocompleted",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "main": "dist/",
   "scripts": {
     "clean:dist": "rm -Rf ./dist/*",
