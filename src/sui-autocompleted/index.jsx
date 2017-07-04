@@ -15,6 +15,7 @@ export default class Autocompleted extends Component {
 
     this.input = null
     this.defaultPosition = selectFirstByDefault ? 0 : -1
+    this.documentClickHandler = this.documentClickHandler.bind(this)
     this.moveDown = this.moveDown.bind(this)
     this.moveUp = this.moveUp.bind(this)
     this.upDownHandler = this.upDownHandler.bind(this)
@@ -53,6 +54,12 @@ export default class Autocompleted extends Component {
     if (this.state.focus) {
       this.focusInput()
     }
+
+    document.addEventListener('click', this.documentClickHandler, false)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('click', this.documentClickHandler, false)
   }
 
   componentWillReceiveProps ({ focus }) {
@@ -87,11 +94,23 @@ export default class Autocompleted extends Component {
     }
   }
 
-  escapeHandler () {
+  closeList () {
     this.setState({
       showResultList: false,
       active: null
     })
+  }
+
+  documentClickHandler (event) {
+    const {target} = event
+    const {wrapper} = this
+    const isClickOutside = !wrapper.contains(target)
+
+    isClickOutside && this.closeList()
+  }
+
+  escapeHandler () {
+    this.closeList()
   }
 
   focusInput () {
@@ -161,7 +180,10 @@ export default class Autocompleted extends Component {
     const { placeholder, handleFocus, handleBlur } = this.props
     const { value, showResultList } = this.state
     return (
-      <div className='sui-Autocompleted'>
+      <div
+        className='sui-Autocompleted'
+        ref={node => { this.wrapper = node }}
+      >
         <input
           ref={node => { this.input = node }}
           value={value}
