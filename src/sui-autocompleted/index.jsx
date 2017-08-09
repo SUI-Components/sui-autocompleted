@@ -2,10 +2,10 @@ import React, {Component, PropTypes} from 'react'
 import ResultsList from './results-list'
 
 const DELTA_MOVE = 1
-const UP = 'ArrowUp'
 const DOWN = 'ArrowDown'
 const ENTER = 'Enter'
 const ESCAPE = 'Escape'
+const UP = 'ArrowUp'
 
 export default class Autocompleted extends Component {
   constructor (...args) {
@@ -14,28 +14,18 @@ export default class Autocompleted extends Component {
     const { selectFirstByDefault, initialValue, focus } = this.props
 
     this.input = null
+    this.wrapper = null
     this.defaultPosition = selectFirstByDefault ? 0 : -1
-    this.documentClickHandler = this.documentClickHandler.bind(this)
-    this.moveDown = this.moveDown.bind(this)
-    this.moveUp = this.moveUp.bind(this)
-    this.upDownHandler = this.upDownHandler.bind(this)
-    this.enterHandler = this.enterHandler.bind(this)
-    this.escapeHandler = this.escapeHandler.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleClear = this.handleClear.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
-    this.handleKeyDown = this.handleKeyDown.bind(this)
-    this.focusInput = this.focusInput.bind(this)
 
     this.state = {
       active: this.defaultPosition,
-      value: initialValue,
+      focus: focus,
       showResultList: false,
-      focus: focus
+      value: initialValue
     }
   }
 
-  moveDown () {
+  moveDown = () => {
     const { active } = this.state
     const lastPosition = this.props.suggests.length - 1
     return active === lastPosition
@@ -43,7 +33,7 @@ export default class Autocompleted extends Component {
       : active + DELTA_MOVE
   }
 
-  moveUp () {
+  moveUp = () => {
     const { active } = this.state
     return active === this.defaultPosition
       ? active
@@ -74,7 +64,7 @@ export default class Autocompleted extends Component {
     }
   }
 
-  upDownHandler (event) {
+  upDownHandler = (event) => {
     // Never go to negative values or value higher than the list length
     const active = event.key === DOWN
       ? this.moveDown()
@@ -84,7 +74,7 @@ export default class Autocompleted extends Component {
     event.preventDefault()
   }
 
-  enterHandler () {
+  enterHandler = () => {
     const suggest = this.props.suggests[this.state.active]
 
     if (suggest) {
@@ -101,23 +91,22 @@ export default class Autocompleted extends Component {
     })
   }
 
-  documentClickHandler (event) {
-    const {target} = event
+  documentClickHandler = ({ target }) => {
     const {wrapper} = this
-    const isClickOutside = !wrapper.contains(target)
+    const isClickOutside = wrapper && !wrapper.contains(target)
 
     isClickOutside && this.closeList()
   }
 
-  escapeHandler () {
+  escapeHandler = () => {
     this.closeList()
   }
 
-  focusInput () {
+  focusInput = () => {
     this.input.focus()
   }
 
-  handleChange (event) {
+  handleChange = (event) => {
     const value = event.target.value
     this.setState({
       value,
@@ -126,7 +115,7 @@ export default class Autocompleted extends Component {
     this.props.handleChange(value)
   }
 
-  handleClear () {
+  handleClear = () => {
     this.handleChange({
       target: {
         value: ''
@@ -135,14 +124,14 @@ export default class Autocompleted extends Component {
     this.focusInput()
   }
 
-  handleSelect (suggest) {
+  handleSelect = (suggest) => {
     this.setState({
       value: suggest.literal || suggest.content
     })
     this.props.handleSelect(suggest)
   }
 
-  handleKeyDown (event) {
+  handleKeyDown = (event) => {
     this.setState({
       showResultList: true
     })
@@ -185,15 +174,15 @@ export default class Autocompleted extends Component {
         ref={node => { this.wrapper = node }}
       >
         <input
-          ref={node => { this.input = node }}
-          value={value}
-          placeholder={placeholder}
           className='sui-Autocompleted-input'
-          type='text'
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          onFocus={handleFocus}
           onBlur={handleBlur}
+          onChange={this.handleChange}
+          onFocus={handleFocus}
+          onKeyDown={this.handleKeyDown}
+          placeholder={placeholder}
+          ref={node => { this.input = node }}
+          type='text'
+          value={value}
         />
         <span
           className='sui-Autocompleted-clear'
@@ -206,16 +195,16 @@ export default class Autocompleted extends Component {
 }
 
 Autocompleted.propTypes = {
+  focus: PropTypes.bool,
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func.isRequired,
-  handleFocus: PropTypes.func,
   handleClear: PropTypes.func,
+  handleFocus: PropTypes.func,
   handleSelect: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
-  suggests: PropTypes.array.isRequired,
   selectFirstByDefault: PropTypes.bool,
-  focus: PropTypes.bool
+  suggests: PropTypes.array.isRequired
 }
 
 Autocompleted.defaultProps = {
