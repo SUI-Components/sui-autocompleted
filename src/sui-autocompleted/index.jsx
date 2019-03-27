@@ -167,7 +167,7 @@ export default class Autocompleted extends Component {
   }
 
   render () {
-    const { placeholder, handleFocus, handleBlur, title } = this.props
+    const { handleBlur, handleFocus, placeholder, title } = this.props
     const { value, showResultList } = this.state
     return (
       <div
