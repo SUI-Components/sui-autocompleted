@@ -167,7 +167,7 @@ export default class Autocompleted extends Component {
   }
 
   render () {
-    const { placeholder, handleFocus, handleBlur } = this.props
+    const { handleBlur, handleFocus, placeholder, title } = this.props
     const { value, showResultList } = this.state
     return (
       <div
@@ -182,6 +182,7 @@ export default class Autocompleted extends Component {
           onKeyDown={this.handleKeyDown}
           placeholder={placeholder}
           ref={node => { this.input = node }}
+          title={title}
           type='text'
           value={value}
         />
@@ -205,11 +206,12 @@ Autocompleted.propTypes = {
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
   selectFirstByDefault: PropTypes.bool,
-  suggests: PropTypes.array.isRequired
+  suggests: PropTypes.array.isRequired,
+  title: PropTypes.string
 }
 
 Autocompleted.defaultProps = {
+  focus: false,
   initialValue: '',
-  selectFirstByDefault: true,
-  focus: false
+  selectFirstByDefault: true
 }
