@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ResultsList from './results-list'
 
@@ -9,7 +9,7 @@ const ESCAPE = 'Escape'
 const UP = 'ArrowUp'
 
 export default class Autocompleted extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args)
 
     const { selectFirstByDefault, initialValue, focus } = this.props
@@ -41,7 +41,7 @@ export default class Autocompleted extends Component {
       : active - DELTA_MOVE
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.state.focus) {
       this.focusInput()
     }
@@ -49,17 +49,17 @@ export default class Autocompleted extends Component {
     document.addEventListener('click', this.documentClickHandler, false)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     document.removeEventListener('click', this.documentClickHandler, false)
   }
 
-  componentWillReceiveProps({ focus }) {
+  componentWillReceiveProps ({ focus }) {
     if (this.state.focus !== focus) {
       this.setState({ focus })
     }
   }
 
-  componentWillUpdate(nextProps, { focus }) {
+  componentWillUpdate (nextProps, { focus }) {
     if (focus) {
       this.focusInput()
     }
@@ -85,7 +85,7 @@ export default class Autocompleted extends Component {
     }
   }
 
-  closeList() {
+  closeList () {
     this.setState({
       showResultList: false,
       active: null
@@ -151,7 +151,7 @@ export default class Autocompleted extends Component {
     }
   }
 
-  renderResultList() {
+  renderResultList () {
     const { suggests } = this.props
     const { active } = this.state
 
@@ -166,7 +166,7 @@ export default class Autocompleted extends Component {
       : null
   }
 
-  render() {
+  render () {
     const { placeholder, handleFocus, handleBlur, title } = this.props
     const { value, showResultList } = this.state
     return (
