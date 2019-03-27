@@ -93,7 +93,7 @@ export default class Autocompleted extends Component {
   }
 
   documentClickHandler = ({ target }) => {
-    const { wrapper } = this
+    const {wrapper} = this
     const isClickOutside = wrapper && !wrapper.contains(target)
 
     isClickOutside && this.closeList()
@@ -161,8 +161,8 @@ export default class Autocompleted extends Component {
           {...this.props}
           handleSelect={this.handleSelect}
           active={active}
-        />
-      )
+          />
+        )
       : null
   }
 
