@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ResultsList from './results-list'
@@ -16,7 +17,7 @@ export default class Autocompleted extends Component {
 
     this.input = null
     this.wrapper = null
-    this.defaultPosition = selectFirstByDefault ? 0 : -1
+    this.defaultPosition = selectFirstByDefault ? {section: 0, suggestion: 0} : -1
 
     this.state = {
       active: this.defaultPosition,
@@ -26,19 +27,57 @@ export default class Autocompleted extends Component {
     }
   }
 
+  isLastSelected = () => {
+    const { active } = this.state
+    const { suggests, withSections } = this.props
+    const lastIndex = suggests.length - 1
+    const lastSection = withSections ? lastIndex : 0
+    const lastPosition = withSections ? suggests[lastIndex].suggestions.length - 1 : lastIndex
+    return active.section === lastSection && active.suggestion === lastPosition
+  }
+
+  isFirstSelected = () => {
+    const { active } = this.state
+    return active.section === this.defaultPosition.section && 
+      active.suggestion === this.defaultPosition.suggestion
+  }
+
+  getLastSectionSuggestion = section => this.props.withSections ? this.props.suggests[section].suggestions.length - 1 : this.props.suggests.length - 1
+    
+
   moveDown = () => {
     const { active } = this.state
-    const lastPosition = this.props.suggests.length - 1
-    return active === lastPosition
-      ? active
-      : active + DELTA_MOVE
+    const { suggests, withSections } = this.props
+    const isLastSelected = this.isLastSelected()
+    if (isLastSelected) {
+      return active
+    }
+    
+    return active.suggestion === this.getLastSectionSuggestion(active.section) ? {
+        section: active.section + DELTA_MOVE,
+        suggestion: 0
+      } : {
+        section: active.section,
+        suggestion: active.suggestion + DELTA_MOVE
+      }
   }
 
   moveUp = () => {
     const { active } = this.state
-    return active === this.defaultPosition
-      ? active
-      : active - DELTA_MOVE
+    const isFirstSelected = this.isFirstSelected()
+    if (isFirstSelected) {
+      return active
+    }
+
+    return active.section !== 0 && active.suggestion === 0 ?
+      {
+        section: active.section - DELTA_MOVE,
+        suggestion: this.getLastSectionSuggestion(active.section - DELTA_MOVE)
+      } 
+      : {
+        section: active.section,
+        suggestion: active.suggestion - DELTA_MOVE
+      }
   }
 
   componentDidMount () {
@@ -198,6 +237,7 @@ export default class Autocompleted extends Component {
 
 Autocompleted.propTypes = {
   focus: PropTypes.bool,
+  getSectionSuggestions: PropTypes.func,
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func.isRequired,
   handleClear: PropTypes.func,
@@ -205,9 +245,12 @@ Autocompleted.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
+  renderSection: PropTypes.func,
+  renderSuggestion: PropTypes.func,
   selectFirstByDefault: PropTypes.bool,
   suggests: PropTypes.array.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  withSections: PropTypes.bool
 }
 
 Autocompleted.defaultProps = {
