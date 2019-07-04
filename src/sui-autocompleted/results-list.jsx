@@ -13,16 +13,15 @@ export default function ResultsList ({
     withSections
   }) {
   const renderSuggestions = ({items, sectionIndex = 0}) => {
-    return items.map((suggest, index) => {
-      return (
+    return items.map((suggest, index) => (
       <ListItem
-        content={renderSuggestion(suggest)}
-        key={suggest.id || index}
-        item={suggest}
+        content={suggest.content || renderSuggestion(suggest)}
         isActive={active && sectionIndex === active.section && index === active.suggestion}
+        item={suggest}
+        key={suggest.id || index}
+        handleSelect={handleSelect}
       />
-    )}
-    )
+    ))
   }
 
   return (
@@ -35,7 +34,7 @@ export default function ResultsList ({
               <ListItem
                 content={content}
                 isSection
-                item={item.section}
+                item={item}
                 key={`section${item.section}`}
               />
             }
@@ -51,7 +50,7 @@ export default function ResultsList ({
 }
 
 ResultsList.propTypes = {
-  active: PropTypes.number,
+  active: PropTypes.object,
   getSectionSuggestions: PropTypes.func,
   handleSelect: PropTypes.func,
   renderSection: PropTypes.func,

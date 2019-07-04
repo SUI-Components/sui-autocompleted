@@ -115,8 +115,9 @@ export default class Autocompleted extends Component {
   }
 
   enterHandler = () => {
-    const suggest = this.props.suggests[this.state.active]
-
+    const {active} = this.state
+    const {suggests, withSections} = this.props
+    const suggest = withSections ? suggests[active.section].suggestions[active.suggestion] : suggests[active.suggestion]
     if (suggest) {
       const value = suggest.literal || suggest.content
       this.setState({ value })

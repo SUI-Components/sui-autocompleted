@@ -3,7 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-export default function ListItem ({content, handleSelect, isActive, isSection, item}) {
+const noop = () => {}
+
+export default function ListItem ({content, handleSelect = noop, isActive, isSection, item}) {
   const classes = cx({
     'sui-Autocompleted-item': !isSection,
     'sui-Autocompleted-section': isSection,
@@ -14,6 +16,7 @@ export default function ListItem ({content, handleSelect, isActive, isSection, i
   return (
     <li
       className={classes}
+      onClick={handleSelect.bind(null, item)}
     >
       {content}
     </li>
