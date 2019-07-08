@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ResultsList from './results-list'
@@ -38,28 +37,26 @@ export default class Autocompleted extends Component {
 
   isFirstSelected = () => {
     const { active } = this.state
-    return active.section === this.defaultPosition.section && 
+    return active.section === this.defaultPosition.section &&
       active.suggestion === this.defaultPosition.suggestion
   }
 
   getLastSectionSuggestion = section => this.props.withSections ? this.props.suggests[section].suggestions.length - 1 : this.props.suggests.length - 1
-    
 
   moveDown = () => {
     const { active } = this.state
-    const { suggests, withSections } = this.props
     const isLastSelected = this.isLastSelected()
     if (isLastSelected) {
       return active
     }
-    
+
     return active.suggestion === this.getLastSectionSuggestion(active.section) ? {
-        section: active.section + DELTA_MOVE,
-        suggestion: 0
-      } : {
-        section: active.section,
-        suggestion: active.suggestion + DELTA_MOVE
-      }
+      section: active.section + DELTA_MOVE,
+      suggestion: 0
+    } : {
+      section: active.section,
+      suggestion: active.suggestion + DELTA_MOVE
+    }
   }
 
   moveUp = () => {
@@ -69,11 +66,11 @@ export default class Autocompleted extends Component {
       return active
     }
 
-    return active.section !== 0 && active.suggestion === 0 ?
-      {
+    return active.section !== 0 && active.suggestion === 0
+      ? {
         section: active.section - DELTA_MOVE,
         suggestion: this.getLastSectionSuggestion(active.section - DELTA_MOVE)
-      } 
+      }
       : {
         section: active.section,
         suggestion: active.suggestion - DELTA_MOVE
