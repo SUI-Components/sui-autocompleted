@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import ListItem from './list-item'
@@ -30,7 +29,7 @@ export default function ResultsList ({
         const content = renderSection(item.section)
         return (
           <Fragment>
-            {content && 
+            {content &&
               <ListItem
                 content={content}
                 isSection
