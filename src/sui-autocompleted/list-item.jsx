@@ -25,6 +25,7 @@ export default function ListItem ({content, handleSelect = noop, isActive, isSec
 ListItem.propTypes = {
   content: PropTypes.element,
   item: PropTypes.object,
+  isSection: PropTypes.bool,
   handleSelect: PropTypes.func,
   isActive: PropTypes.bool
 }
