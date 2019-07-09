@@ -254,5 +254,6 @@ Autocompleted.propTypes = {
 Autocompleted.defaultProps = {
   focus: false,
   initialValue: '',
-  selectFirstByDefault: true
+  selectFirstByDefault: true,
+  withSections: false
 }
