@@ -11,17 +11,15 @@ export default function ResultsList ({
     suggests,
     withSections
   }) {
-  const renderSuggestions = ({items, sectionIndex = 0}) => {
-    return items.map((suggest, index) => (
-      <ListItem
-        content={suggest.content || renderSuggestion(suggest)}
-        isActive={active && sectionIndex === active.section && index === active.suggestion}
-        item={suggest}
-        key={suggest.id || index}
-        handleSelect={handleSelect}
+  const renderSuggestions = ({items, sectionIndex = 0}) => items.map((suggest, index) => (
+    <ListItem
+      content={suggest.content || renderSuggestion(suggest)}
+      isActive={active && sectionIndex === active.section && index === active.suggestion}
+      item={suggest}
+      key={suggest.id || index}
+      handleSelect={handleSelect}
       />
     ))
-  }
 
   return (
     <ul className='sui-Autocompleted-results'>
