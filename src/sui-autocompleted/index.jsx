@@ -61,8 +61,7 @@ export default class Autocompleted extends Component {
 
   moveUp = () => {
     const { active } = this.state
-    const isFirstSelected = this.isFirstSelected()
-    if (isFirstSelected) {
+    if (this.isFirstSelected()) {
       return active
     }
 
