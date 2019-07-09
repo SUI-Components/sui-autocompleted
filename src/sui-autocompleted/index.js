@@ -47,7 +47,7 @@ function Autocompleted ({focus,
     }
 
     document.addEventListener('click', documentClickHandler, false)
-    return document.removeEventListener('click', documentClickHandler, false)
+    return () => document.removeEventListener('click', documentClickHandler, false)
   }, [])
 
   useEffect(() => {
