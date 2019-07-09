@@ -31,7 +31,7 @@ function Autocompleted ({focus,
   const wrapper = useRef(null)
   useEffect(() => {
     function documentClickHandler ({ target }) {
-      const isClickOutside = wrapper.current && !wrapper.contains(target)
+      const isClickOutside = wrapper.current && !wrapper.current.contains(target)
       isClickOutside && closeList()
     }
 
