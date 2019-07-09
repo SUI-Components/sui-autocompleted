@@ -23,17 +23,6 @@ function Autocompleted ({focus,
   suggests,
   title,
   withSections}) {
-      // componentWillReceiveProps ({ focus }) {
-  //   if (this.state.focus !== focus) {
-  //     this.setState({ focus })
-  //   }
-  // }
-
-  // componentWillUpdate (nextProps, { focus }) {
-  //   if (focus) {
-  //     this.focusInput()
-  //   }
-  // }
   const defaultPosition = selectFirstByDefault ? {section: 0, suggestion: 0} : -1
   const [active, setActive] = useState(defaultPosition)
   const [showResultList, setShowResultList] = useState(false)
@@ -42,7 +31,7 @@ function Autocompleted ({focus,
   const wrapper = useRef(null)
   useEffect(() => {
     function documentClickHandler ({ target }) {
-      const isClickOutside = wrapper && !wrapper.contains(target)
+      const isClickOutside = wrapper.current && !wrapper.contains(target)
       isClickOutside && closeList()
     }
 
@@ -52,12 +41,12 @@ function Autocompleted ({focus,
 
   useEffect(() => {
     if (focus) {
-      input.current && input.focus
+      input.current && input.current.focus()
     }
   }, [focus])
 
   const focusInput = () => {
-    input.focus()
+    input.current.focus()
   }
 
   const closeList = () => {
