@@ -1,6 +1,6 @@
 {
   "name": "@schibstedspain/sui-autocompleted",
-  "version": "5.4.0",
+  "version": "6.0.0",
   "main": "dist/",
   "scripts": {
     "clean:dist": "rm -Rf ./dist/*",
@@ -46,9 +46,8 @@
     "node-sass": "4",
     "opener": "1.4.1",
     "prop-types": "15.6.0",
-    "react": "15",
-    "react-dom": "15",
-    "react-hot-loader": "1",
+    "react": "16",
+    "react-dom": "16",
     "sass-loader": "1.0.2",
     "style-loader": "0.12.3",
     "webpack": "1.9.11",

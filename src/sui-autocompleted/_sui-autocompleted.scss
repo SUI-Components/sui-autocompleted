@@ -55,6 +55,12 @@
     }
   }
 
+  &-section {
+    font-size: $fz-base;
+    margin: 0;
+    padding: $p-base * 1.25;
+  }
+
   &-suggestion {
     display: inline-block;
 
