@@ -1,6 +1,8 @@
 @import '~@schibstedspain/theme-basic/lib/index';
 @import './settings';
 
+$p-base-autocompleted-input: 16px !default;
+
 .sui-Autocompleted {
   position: relative;
   width: 100%;
@@ -8,7 +10,7 @@
   &-input {
     font-size: $fz-body;
     font-weight: bold;
-    padding: $p-base;
+    padding: $p-base-autocompleted-input;
     width: 100%;
   }
 
@@ -35,7 +37,7 @@
     cursor: pointer;
     font-size: $fz-base;
     margin: 0;
-    padding: $p-base * 1.25;
+    padding: $p-base-autocompleted-input * 1.25;
 
     &:nth-child(odd) {
       background: $primary-color;
@@ -59,7 +61,7 @@
   &-section {
     font-size: $fz-base;
     margin: 0;
-    padding: $p-base * 1.25;
+    padding: $p-base-autocompleted-input * 1.25;
   }
 
   &-suggestion {
