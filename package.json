@@ -3,22 +3,15 @@
   "version": "6.0.0",
   "main": "dist/",
   "scripts": {
-    "clean:dist": "rm -Rf ./dist/*",
-    "predist": "npm run clean:dist -s",
-    "dist": "npm run dist:scripts && npm run dist:styles",
-    "dist:scripts": "babel src --out-dir dist",
-    "dist:styles": "node-sass src/index.scss dist/_sui-autocompleted.scss --importer ./scripts/importer.js",
-    "prepublish": "npm run dist",
+    "clean": "rm -Rf ./dist/*",
+    "lib": "npm run clean && npm run lib:scripts && npm run lib:styles",
+    "lib:scripts": "babel src --out-dir lib",
+    "lib:styles": "cpx './src/**/*.scss' ./dist",
+    "prepublish": "npm run lib",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:sass": "node_modules/.bin/sass-lint src/**/*.scss -c -v",
     "lint:js": "node_modules/.bin/eslint --ext .js,.jsx ./",
-    "test": "",
-    "dev": "npm run dev:open && npm run dev:serve",
-    "dev:serve": "webpack-dev-server --devtool eval --progress --colors --content-base docs/",
-    "dev:open": "opener http://localhost:8080",
-    "predoc": "webpack --config webpack.doc.config.js",
-    "doc": "npm run doc:build",
-    "doc:build": "gh-pages -d docs"
+    "test": ""
   },
   "repository": {
     "type": "git",
@@ -29,31 +22,25 @@
     "react": "0.14 || 15"
   },
   "devDependencies": {
-    "@schibstedspain/frontend-pre-commit-rules": "7",
+    "@babel/cli": "7.6.4",
+    "@s-ui/lint": "3",
     "@schibstedspain/theme-basic": "5",
-    "babel-polyfill": "6",
-    "babel-cli": "6",
-    "babel-core": "6",
-    "babel-loader": "6",
-    "babel-preset-sui": "1",
+    "cpx": "1.5.0",
+    "babel-preset-sui": "3",
     "classnames": "2",
-    "css-loader": "0.15.3",
-    "expect": "1.6.0",
-    "gh-pages": "0.3.1",
-    "lodash": "3.9.3",
-    "mocha": "2.3.4",
-    "node-libs-browser": "0.5.2",
-    "node-sass": "4",
-    "opener": "1.4.1",
     "prop-types": "15.6.0",
     "react": "16",
-    "react-dom": "16",
-    "sass-loader": "1.0.2",
-    "style-loader": "0.12.3",
-    "webpack": "1.9.11",
-    "webpack-dev-server": "1.9.0"
+    "react-dom": "16"
   },
   "pre-commit": [
     "test"
-  ]
+  ],
+  "eslintConfig": {
+    "extends": "./node_modules/@s-ui/lint/eslintrc.js"
+  },
+  "babel": {
+    "presets": [
+      "sui"
+    ]
+  }
 }
