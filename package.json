@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rm -Rf ./dist/*",
     "lib": "npm run clean && npm run lib:scripts && npm run lib:styles",
-    "lib:scripts": "babel src --out-dir lib",
+    "lib:scripts": "babel src --out-dir dist",
     "lib:styles": "cpx './src/**/*.scss' ./dist",
     "prepublish": "npm run lib",
     "lint": "npm run lint:js && npm run lint:sass",
